@@ -105,16 +105,16 @@ void GameEngine::Splash()
 {
     Uint64 start;
     Uint64 end;
-    int xpos = 0 - screenSurface->w;
+    int xpos = 0 - (screenSurface->w*5);
     int ypos = 0;
     int rectangles = 10;
     bool right = true;
     list<SplashRectangle> splashArray;
     for (size_t i = 0; i < 10; i++)
     {
-        int speed = ((screenSurface->w)) / (splashFrames/12);
-        cout << "speed" << screenSurface->h / rectangles << endl;
-        int size[2] = { screenSurface->w, (screenSurface->h / rectangles) }; int pos[2] = { xpos, ypos };
+        int speed = ((screenSurface->w)) / (splashFrames/8);
+        cout << "speed" << screenSurface->w << endl;
+        int size[2] = { (screenSurface->w*5), (screenSurface->h / rectangles) }; int pos[2] = { xpos, ypos };
         ypos += (screenSurface->h / rectangles);
         xpos -= (screenSurface->w / rectangles);
         //////////////Create Starting Objects
@@ -128,9 +128,9 @@ void GameEngine::Splash()
         {
             start = SDL_GetPerformanceCounter();
             SDL_RenderPresent(renderer);
-            SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+            SDL_SetRenderDrawColor(renderer, 250, 158, 2, 255);
             SDL_RenderClear(renderer);
-            SDL_SetRenderDrawColor(renderer, 255, 0, 255, 255);
+            SDL_SetRenderDrawColor(renderer, 251, 188, 79, 255);
             list<SplashRectangle>::iterator it;
             for (it = splashArray.begin(); it != splashArray.end(); ++it)
             {
