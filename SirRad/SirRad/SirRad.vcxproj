@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{d7184e80-c989-4cec-95fd-e6c74e4feb34}</ProjectGuid>
+    <ProjectGuid>{ACC679AF-E531-46F0-A7B5-05B253AEB362}</ProjectGuid>
     <RootNamespace>SirRad</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
