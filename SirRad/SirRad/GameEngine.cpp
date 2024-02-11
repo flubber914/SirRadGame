@@ -107,12 +107,12 @@ void GameEngine::Splash()
     Uint64 end;
     int xpos = 0 - (screenSurface->w*5);
     int ypos = 0;
-    int rectangles = 10;
+    int rectangles = 12;
     bool right = true;
     list<SplashRectangle> splashArray;
-    for (size_t i = 0; i < 10; i++)
+    for (size_t i = 0; i < rectangles; i++)
     {
-        int speed = ((screenSurface->w)) / (splashFrames/8);
+        int speed = ((screenSurface->w)) / (splashFrames/(screenSurface->w/100));
         cout << "speed" << screenSurface->w << endl;
         int size[2] = { (screenSurface->w*5), (screenSurface->h / rectangles) }; int pos[2] = { xpos, ypos };
         ypos += (screenSurface->h / rectangles);
@@ -143,6 +143,13 @@ void GameEngine::Splash()
             SDL_Delay(floor((5000 / splashFrames) - elapsedMS));
             //SDL_Delay(100);
             //SDL_RenderPresent(renderer);
+        }
+        //int tempX = 
+        list<SplashRectangle>::iterator it;
+        for (it = splashArray.begin(); it != splashArray.end(); ++it)
+        {
+            int newPos[2] = { it->GetPosX(), screenSurface->h - (it->GetPosY() + it->GetSizeH()) };
+            it->SetPosition(newPos);
         }
         right = !right;
     }

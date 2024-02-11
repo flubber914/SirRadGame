@@ -22,3 +22,9 @@ bool SplashRectangle::Move(bool moveRight)
 	}
 	return false;
 }
+
+void SplashRectangle::SetPosition(int _position[2])
+{
+	position[0] = _position[0];
+	position[1] = _position[1];
+}
