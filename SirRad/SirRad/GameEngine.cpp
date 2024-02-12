@@ -107,7 +107,7 @@ void GameEngine::Splash()
     Uint64 end;
     int xpos = 0 - (screenSurface->w*5);
     int ypos = 0;
-    int rectangles = 12;
+    int rectangles = 6;
     bool right = true;
     list<SplashRectangle> splashArray;
     for (size_t i = 0; i < rectangles; i++)
@@ -148,7 +148,8 @@ void GameEngine::Splash()
         list<SplashRectangle>::iterator it;
         for (it = splashArray.begin(); it != splashArray.end(); ++it)
         {
-            int newPos[2] = { it->GetPosX(), screenSurface->h - (it->GetPosY() + it->GetSizeH()) };
+            int newPos[2] = { it->GetPosX(), (it->GetSizeH()*rectangles) - it->GetPosY() - it->GetSizeH() };
+            cout << "creee" << screenSurface->h - it->GetPosY() - it->GetSizeH() << endl;
             it->SetPosition(newPos);
         }
         right = !right;
