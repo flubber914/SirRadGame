@@ -8,6 +8,7 @@
 #include "SDL.h"
 #include "Player.h"
 #include "SplashRectangle.h"
+#include "SZ_Timer.h"
 
 class GameEngine
 {
@@ -15,6 +16,7 @@ public:
 	GameEngine(SDL_Window* window); ///constructor
 	~GameEngine(); //destructor
 private:
+	SZ_Timer aTimer;
 	Player SirRad;
 	bool quit = false;
 	SDL_Renderer* renderer;

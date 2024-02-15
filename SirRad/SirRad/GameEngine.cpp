@@ -10,7 +10,7 @@ GameEngine::GameEngine(SDL_Window* window)
     screenSurface = SDL_GetWindowSurface(window);
     int speed = 10;
     int size[2] = { 100, 100 }; int pos[2] = { 100, 100 };
-    //////////////Create Starting Objects
+    //////////////Create Main Character
     SirRad = Player(size, pos, &speed);
     //////////////
     Splash(); //do the splash screen at the start of the game
@@ -25,8 +25,9 @@ void GameEngine::GameLoop()
 {
     while (!quit)
     {
-        Render();
+        aTimer.resetTicksTimer();
         Update();
+        Render();
         //Handle events on queue
 
         //Clear screen
@@ -37,7 +38,7 @@ void GameEngine::GameLoop()
 
         //Update screen
         //SDL_RenderPresent(gRenderer);
-        SDL_Delay(100);
+        SDL_Delay(16.667 - aTimer.getTicks());
     }
 }
 /// <summary>
@@ -45,6 +46,7 @@ void GameEngine::GameLoop()
 /// </summary>
 void GameEngine::Update()
 {
+    ////////////////Probably should be in an input function instead of update????
     while (SDL_PollEvent(&event) != 0)
     {
         switch (event.type)
@@ -75,6 +77,7 @@ void GameEngine::Update()
             break;
         }
     }
+    ////////////
 }
 /// <summary>
 /// the drawing of all objects within the game
@@ -83,7 +86,6 @@ void GameEngine::Render()
 {
     /////////////////////////draw background
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-    SDL_RenderPresent(renderer);
     SDL_RenderClear(renderer);
     ///////////////////////// 
     SDL_SetRenderDrawColor(renderer, 255, 0, 255, 255);
@@ -103,31 +105,32 @@ void GameEngine::DrawCharacter(Character* draw)
 
 void GameEngine::Splash()
 {
-    Uint64 start;
-    Uint64 end;
+    aTimer.resetTicksTimer();
     int xpos = 0 - (screenSurface->w*5);
     int ypos = 0;
     int rectangles = 6;
     bool right = true;
+    float screenWidth = screenSurface->w;
+    float screenHeight = screenSurface->h;
     list<SplashRectangle> splashArray;
     for (size_t i = 0; i < rectangles; i++)
     {
-        int speed = ((screenSurface->w)) / (splashFrames/(screenSurface->w/100));
-        cout << "speed" << screenSurface->w << endl;
-        int size[2] = { (screenSurface->w*5), (screenSurface->h / rectangles) }; int pos[2] = { xpos, ypos };
-        ypos += (screenSurface->h / rectangles);
-        xpos -= (screenSurface->w / rectangles);
+        ////////////////////////Setup Splash Square stats
+        int speed = (screenWidth) / (splashFrames/(screenSurface->w/ (screenWidth /8)));
+        int size[2] = { (screenWidth *5), (ceil(screenHeight / rectangles)) }; int pos[2] = { xpos, ypos };
+        ypos += ceil(screenHeight / rectangles);
+        xpos -= ceil(screenWidth / rectangles);
+        cout << "position: " << ypos << endl;
         //////////////Create Starting Objects
         SplashRectangle* newRectangle = new SplashRectangle(size, pos, &speed);
         splashArray.push_back(*newRectangle);
         //////////////
     }
+    //////////////////////////////loop each frame drawing all splash cubes
     for (size_t i = 0; i < 4; i++)
     {
         for (size_t o = 0; o < splashFrames/4; o++)
         {
-            start = SDL_GetPerformanceCounter();
-            SDL_RenderPresent(renderer);
             SDL_SetRenderDrawColor(renderer, 250, 158, 2, 255);
             SDL_RenderClear(renderer);
             SDL_SetRenderDrawColor(renderer, 251, 188, 79, 255);
@@ -137,21 +140,19 @@ void GameEngine::Splash()
                 it->Move(right);
                 DrawCharacter(&(*it));
             }
-            end = SDL_GetPerformanceCounter();
-            float elapsedMS = (end - start) / (float)SDL_GetPerformanceFrequency() * 1000.0f;
-            cout << elapsedMS << endl;
-            SDL_Delay(floor((5000 / splashFrames) - elapsedMS));
-            //SDL_Delay(100);
-            //SDL_RenderPresent(renderer);
+            SDL_Delay(floor((5000 / splashFrames) - aTimer.getTicks()));
+            aTimer.resetTicksTimer();
+            SDL_RenderPresent(renderer);
         }
+        /////////////////////////////Swap cube positions
         //int tempX = 
         list<SplashRectangle>::iterator it;
         for (it = splashArray.begin(); it != splashArray.end(); ++it)
         {
             int newPos[2] = { it->GetPosX(), (it->GetSizeH()*rectangles) - it->GetPosY() - it->GetSizeH() };
-            cout << "creee" << screenSurface->h - it->GetPosY() - it->GetSizeH() << endl;
             it->SetPosition(newPos);
         }
         right = !right;
     }
+    //////////////////////
 }

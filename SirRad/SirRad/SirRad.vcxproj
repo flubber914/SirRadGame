@@ -132,12 +132,14 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SirRad.cpp" />
     <ClCompile Include="SplashRectangle.cpp" />
+    <ClCompile Include="SZ_Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h" />
     <ClInclude Include="GameEngine.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="SplashRectangle.h" />
+    <ClInclude Include="SZ_Timer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
