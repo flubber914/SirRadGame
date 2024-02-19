@@ -1,6 +1,10 @@
 #include "GameEngine.h"
 #include <list>
 
+GameEngine::GameEngine()
+{
+}
+
 /// <summary>
 /// this constructor starts the game and it's loop
 /// </summary>
@@ -14,6 +18,8 @@ GameEngine::GameEngine(SDL_Window* window)
     SirRad = Player(size, pos, &speed);
     //////////////
     Splash(); //do the splash screen at the start of the game
+    GameOfLife newLife;
+    Life = &newLife.Create(screenSurface->w, screenSurface->h, renderer);
     GameLoop(); ////always goes last probably
 }
 
@@ -46,6 +52,14 @@ void GameEngine::GameLoop()
 /// </summary>
 void GameEngine::Update()
 {
+    if (count == 8) 
+    {
+        Life->ChangeLife();
+        count = 0;
+    }
+    else {
+        count++;
+    }
     ////////////////Probably should be in an input function instead of update????
     while (SDL_PollEvent(&event) != 0)
     {
@@ -68,14 +82,36 @@ void GameEngine::Update()
                 break;
             case SDLK_d:
                 SirRad.Move(true);
+                break;
             default:
                 break;
             }
             break;
+        case SDL_MOUSEBUTTONDOWN:
+            printf("eyyyy");
+            if (event.button.button == (SDL_BUTTON_LEFT))
+            {
+                leftMousePressed = true;
+            }
+            break;
+        case SDL_MOUSEBUTTONUP:
+            printf("eyyyy");
+            if (event.button.button == (SDL_BUTTON_LEFT))
+            {
+                leftMousePressed = false;
+            }
+            break;
         default:
-            printf("event polled");
+            //printf("event polled");
             break;
         }
+    }
+    if (leftMousePressed)
+    {
+        int x, y;
+        SDL_GetMouseState(&x, &y);
+        Life->ScreenClick(x, y);
+        printf("?????");
     }
     ////////////
 }
@@ -89,7 +125,8 @@ void GameEngine::Render()
     SDL_RenderClear(renderer);
     ///////////////////////// 
     SDL_SetRenderDrawColor(renderer, 255, 0, 255, 255);
-    DrawCharacter(&SirRad);///////////DrawPlayer
+    Life->DrawLife();
+    //DrawCharacter(&SirRad);///////////DrawPlayer
     SDL_RenderPresent(renderer);
 }
 
@@ -106,8 +143,8 @@ void GameEngine::DrawCharacter(Character* draw)
 void GameEngine::Splash()
 {
     aTimer.resetTicksTimer();
-    int xpos = 0 - (screenSurface->w*5);
-    int ypos = 0;
+    float xpos = 0 - (screenSurface->w*5);
+    float ypos = 0;
     int rectangles = 6;
     bool right = true;
     float screenWidth = screenSurface->w;
