@@ -10,6 +10,7 @@
 #include "SplashRectangle.h"
 #include "SZ_Timer.h"
 #include "GameOfLife.h"
+#include "ColourGame.h"
 
 class GameEngine
 {
@@ -27,7 +28,7 @@ private:
 	int count = 0;
 	SDL_Renderer* renderer;
 	SDL_Event event;
-	GameOfLife *Life;
+	//GameOfLife *Life;
 	void GameLoop(); //the main game loop
 	void Update(); //updates values of objects
 	void Render(); //renders updated objects 

@@ -2,6 +2,7 @@
 #define GAMEOFLIFE_H
 #include <stdlib.h>
 #include <iostream>
+#include <chrono>
 #include "SplashRectangle.h"
 #include "SDL.h"
 using namespace std;

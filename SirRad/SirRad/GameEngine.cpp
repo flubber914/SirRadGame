@@ -19,7 +19,7 @@ GameEngine::GameEngine(SDL_Window* window)
     //////////////
     Splash(); //do the splash screen at the start of the game
     GameOfLife newLife;
-    Life = &newLife.Create(screenSurface->w, screenSurface->h, renderer);
+    //Life = &newLife.Create(screenSurface->w, screenSurface->h, renderer);
     GameLoop(); ////always goes last probably
 }
 
@@ -54,7 +54,7 @@ void GameEngine::Update()
 {
     if (count == 8) 
     {
-        Life->ChangeLife();
+        //Life->ChangeLife();
         count = 0;
     }
     else {
@@ -87,20 +87,7 @@ void GameEngine::Update()
                 break;
             }
             break;
-        case SDL_MOUSEBUTTONDOWN:
-            printf("eyyyy");
-            if (event.button.button == (SDL_BUTTON_LEFT))
-            {
-                leftMousePressed = true;
-            }
-            break;
-        case SDL_MOUSEBUTTONUP:
-            printf("eyyyy");
-            if (event.button.button == (SDL_BUTTON_LEFT))
-            {
-                leftMousePressed = false;
-            }
-            break;
+
         default:
             //printf("event polled");
             break;
@@ -110,7 +97,7 @@ void GameEngine::Update()
     {
         int x, y;
         SDL_GetMouseState(&x, &y);
-        Life->ScreenClick(x, y);
+        //Life->ScreenClick(x, y);
         printf("?????");
     }
     ////////////
@@ -125,7 +112,7 @@ void GameEngine::Render()
     SDL_RenderClear(renderer);
     ///////////////////////// 
     SDL_SetRenderDrawColor(renderer, 255, 0, 255, 255);
-    Life->DrawLife();
+    //Life->DrawLife();
     //DrawCharacter(&SirRad);///////////DrawPlayer
     SDL_RenderPresent(renderer);
 }
