@@ -29,6 +29,7 @@ private:
 	SDL_Renderer* renderer;
 	SDL_Event event;
 	//GameOfLife *Life;
+	ColourGame *game;
 	void GameLoop(); //the main game loop
 	void Update(); //updates values of objects
 	void Render(); //renders updated objects 

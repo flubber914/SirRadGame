@@ -20,6 +20,8 @@ GameEngine::GameEngine(SDL_Window* window)
     Splash(); //do the splash screen at the start of the game
     GameOfLife newLife;
     //Life = &newLife.Create(screenSurface->w, screenSurface->h, renderer);
+    ColourGame newGame;
+    game = &newGame.Create(renderer);
     GameLoop(); ////always goes last probably
 }
 
@@ -52,14 +54,6 @@ void GameEngine::GameLoop()
 /// </summary>
 void GameEngine::Update()
 {
-    if (count == 8) 
-    {
-        //Life->ChangeLife();
-        count = 0;
-    }
-    else {
-        count++;
-    }
     ////////////////Probably should be in an input function instead of update????
     while (SDL_PollEvent(&event) != 0)
     {
@@ -77,11 +71,29 @@ void GameEngine::Update()
                 quit = true;
                 break;
             case SDLK_a:
-                SirRad.Move(false);
+                //SirRad.Move(false);
                 printf("eyy");
                 break;
             case SDLK_d:
-                SirRad.Move(true);
+                //SirRad.Move(true);
+                break;
+            case SDLK_r:
+                game->RecieveInput(ColourGame::Red);
+                break;
+            case SDLK_o:
+                game->RecieveInput(ColourGame::Orange);
+                break;
+            case SDLK_y:
+                game->RecieveInput(ColourGame::Yellow);
+                break;
+            case SDLK_g:
+                game->RecieveInput(ColourGame::Green);
+                break;
+            case SDLK_b:
+                game->RecieveInput(ColourGame::Blue);
+                break;
+            case SDLK_w:
+                game->RecieveInput(ColourGame::White);
                 break;
             default:
                 break;
@@ -93,13 +105,6 @@ void GameEngine::Update()
             break;
         }
     }
-    if (leftMousePressed)
-    {
-        int x, y;
-        SDL_GetMouseState(&x, &y);
-        //Life->ScreenClick(x, y);
-        printf("?????");
-    }
     ////////////
 }
 /// <summary>
@@ -108,12 +113,13 @@ void GameEngine::Update()
 void GameEngine::Render()
 {
     /////////////////////////draw background
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    //game.
+    quit = game->NextColour();
+    game->SetColour(game->GetQuestion());
     SDL_RenderClear(renderer);
-    ///////////////////////// 
-    SDL_SetRenderDrawColor(renderer, 255, 0, 255, 255);
-    //Life->DrawLife();
-    //DrawCharacter(&SirRad);///////////DrawPlayer
+    game->SetColour(game->GetAnswer());
+    DrawCharacter(&game->rect);
+    /////////bbbbbbbbbbbbbbbbbbb/////////////s/// 
     SDL_RenderPresent(renderer);
 }
 
