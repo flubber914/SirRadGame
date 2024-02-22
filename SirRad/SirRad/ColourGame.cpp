@@ -12,6 +12,12 @@ ColourGame::ColourGame(SDL_Renderer* _renderer)
 	int speed = 0;
 	int size[2] = { (100), 100 }; int pos[2] = { 100, 100 };
 	rect = *(new SplashRectangle(size, pos, &speed));
+	size[0] = 450; size[1] = 30;
+	pos[0] = 0; pos[1] = 0;
+	bar = *(new SplashRectangle(size, pos, &speed));
+	size[0] = 0; size[1] = 30;
+	pos[0] = 0; pos[1] = 0;
+	barFil = *(new SplashRectangle(size, pos, &speed));
 	StartGame();
 }
 
@@ -54,6 +60,8 @@ bool ColourGame::NextColour()
 			return true;
 		}
 		length++;
+		int size[2] = {length * 30, 30};
+		barFil.SetSize(size);
 		StartGame();
 	}
 	return false;
@@ -71,7 +79,7 @@ void ColourGame::SetColour(colour colour)
 		SDL_SetRenderDrawColor(renderer, 255, 165, 0, 255);
 		break;
 	case ColourGame::Yellow:
-		SDL_SetRenderDrawColor(renderer, 255, 255, 204, 255);
+		SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255);
 		break;
 	case ColourGame::Green:
 		SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);

@@ -20,6 +20,8 @@ public:
 	colour GetAnswer();
 	colour GetQuestion();
 	SplashRectangle rect;
+	SplashRectangle bar;
+	SplashRectangle barFil;
 	int length = 0;
 	int duration = 15;
 private:

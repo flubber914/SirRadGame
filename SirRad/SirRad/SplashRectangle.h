@@ -10,6 +10,7 @@ public:
     ~SplashRectangle();
     bool Move(bool moveRight) override;
     void SetPosition(int _position[2]);
+    void SetSize(int _size[2]);
 private:
 };
 #endif // !SPLASHRECTANGLE_H

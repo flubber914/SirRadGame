@@ -119,6 +119,10 @@ void GameEngine::Render()
     SDL_RenderClear(renderer);
     game->SetColour(game->GetAnswer());
     DrawCharacter(&game->rect);
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    DrawCharacter(&game->bar);
+    SDL_SetRenderDrawColor(renderer, 230, 122, 27, 255);
+    DrawCharacter(&game->barFil);
     /////////bbbbbbbbbbbbbbbbbbb/////////////s/// 
     SDL_RenderPresent(renderer);
 }
