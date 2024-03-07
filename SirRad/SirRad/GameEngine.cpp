@@ -13,7 +13,7 @@ GameEngine::GameEngine(SDL_Window* window)
     renderer = SDL_CreateRenderer(window, -1, 0);
     screenSurface = SDL_GetWindowSurface(window);
     int speed = 10;
-    int size[2] = { 100, 100 }; int pos[2] = { 100, 100 };
+    int size[2] = { 30, 30 }; int pos[2] = { screenSurface->w/2, screenSurface->h - (screenSurface->h/8)};
     //////////////Create Main Character
     SirRad = Player(size, pos, &speed);
     //////////////
@@ -71,29 +71,11 @@ void GameEngine::Update()
                 quit = true;
                 break;
             case SDLK_a:
-                //SirRad.Move(false);
-                printf("eyy");
+                SirRad.Move(false);
                 break;
             case SDLK_d:
-                //SirRad.Move(true);
+                SirRad.Move(true);
                 break;
-            case SDLK_r:
-                game->RecieveInput(ColourGame::Red);
-                break;
-            case SDLK_o:
-                game->RecieveInput(ColourGame::Orange);
-                break;
-            case SDLK_y:
-                game->RecieveInput(ColourGame::Yellow);
-                break;
-            case SDLK_g:
-                game->RecieveInput(ColourGame::Green);
-                break;
-            case SDLK_b:
-                game->RecieveInput(ColourGame::Blue);
-                break;
-            case SDLK_w:
-                game->RecieveInput(ColourGame::White);
                 break;
             default:
                 break;
@@ -114,15 +96,10 @@ void GameEngine::Render()
 {
     /////////////////////////draw background
     //game.
-    quit = game->NextColour();
-    game->SetColour(game->GetQuestion());
-    SDL_RenderClear(renderer);
-    game->SetColour(game->GetAnswer());
-    DrawCharacter(&game->rect);
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-    DrawCharacter(&game->bar);
+    SDL_RenderClear(renderer);
     SDL_SetRenderDrawColor(renderer, 230, 122, 27, 255);
-    DrawCharacter(&game->barFil);
+    DrawCharacter(&SirRad);
     /////////bbbbbbbbbbbbbbbbbbb/////////////s/// 
     SDL_RenderPresent(renderer);
 }
