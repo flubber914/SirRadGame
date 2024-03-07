@@ -11,6 +11,7 @@
 #include "SZ_Timer.h"
 #include "GameOfLife.h"
 #include "ColourGame.h"
+#include <SDL_image.h>
 
 class GameEngine
 {
