@@ -20,8 +20,8 @@ GameEngine::GameEngine(SDL_Window* window)
     Splash(); //do the splash screen at the start of the game
     GameOfLife newLife;
     //Life = &newLife.Create(screenSurface->w, screenSurface->h, renderer);
-    ColourGame newGame;
-    game = &newGame.Create(renderer);
+    //ColourGame newGame;
+    // game = &newGame.Create(renderer);
     GameLoop(); ////always goes last probably
 }
 
