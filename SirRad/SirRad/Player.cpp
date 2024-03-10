@@ -4,7 +4,7 @@ Player::Player()
 {
 }
 
-Player::Player(int _size[2], int _position[2], int* _speed) : Character(_size, _position, _speed)
+Player::Player(int _size[2], int _position[2], int* _speed, string _ImagePath) : Character(_size, _position, _speed, _ImagePath)
 {
 }
 

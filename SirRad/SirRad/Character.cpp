@@ -9,11 +9,15 @@ Character::Character()
 /// <summary>
 /// this constructor sets character statistics
 /// </summary>
-Character::Character(int _size [2], int _position [2], int* _speed)
+Character::Character(int _size [2], int _position [2], int* _speed, string _ImagePath)
 {
 	size[0] = _size[0]; size[1] = _size[1];
 	position[0] = _position[0]; position[1] = _position[1];
 	speed = *_speed;
+	ImagePath = _ImagePath;
+	if (ImagePath != "None") {
+		//image_surface = SDL_CreateTextureFromSurface();
+	}
 }
 /// <summary>
 /// this virtual constructor for the virtual class Character

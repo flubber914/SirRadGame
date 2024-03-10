@@ -6,7 +6,7 @@ class Player :
 {
 public:
     Player();//default Constructor
-    Player(int _size [2], int _position[2], int* _speed);
+    Player(int _size [2], int _position[2], int* _speed, string _ImagePath);
     ~Player();
     bool Move(bool moveRight) override;
 private:

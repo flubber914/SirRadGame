@@ -4,9 +4,12 @@
 #include <stdio.h>
 #include <cstdlib>
 #include <iostream>
+#include <list>
+#include <string>
 
-#include "SDL.h"
+#include <SDL.h>
 #include "Player.h"
+#include "ImageRenderer.h"
 #include "SplashRectangle.h"
 #include "SZ_Timer.h"
 #include "GameOfLife.h"
@@ -27,14 +30,20 @@ private:
 	bool quit = false;
 	bool leftMousePressed = false;
 	int count = 0;
-	SDL_Renderer* renderer;
+	//SDL_Renderer* renderer;
 	SDL_Event event;
+	ImageRenderer ImageRender;
 	//GameOfLife *Life;
 	ColourGame *game;
 	void GameLoop(); //the main game loop
+	void Input();
 	void Update(); //updates values of objects
 	void Render(); //renders updated objects 
 	//void DrawCharacter(Character* draw); //Draws all characters for the renderer
+
+	////////////Movement Variables
+	bool MoveLeft = false;
+	bool MoveRight = false;
 
 	//splash screen
 	int splashFrames = 300;

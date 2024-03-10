@@ -4,7 +4,7 @@ SplashRectangle::SplashRectangle()
 {
 }
 
-SplashRectangle::SplashRectangle(int _size[2], int _position[2], int* _speed) : Character(_size, _position, _speed)
+SplashRectangle::SplashRectangle(int _size[2], int _position[2], int* _speed) : Character(_size, _position, _speed, "None")
 {
 }
 
