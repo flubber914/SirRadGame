@@ -5,7 +5,9 @@ using namespace std;
 
 #include <vector>
 #include <string>
-#include "GameEngine.h"
+#include <SDL_image.h>
+
+class GameEngine;
 
 class Character
 {
@@ -18,13 +20,20 @@ public:
 	int GetSizeH() { return size[1]; }
 	int GetPosX() { return position[0]; }
 	int GetPosY() { return position[1]; }
+	SDL_Surface* GetSurface() { return character_Surface; }
+	void Init(GameEngine* _parent);
 	string GetImagePath() { return ImagePath; }
-	SDL_Texture* image_surface;
+	GameEngine* parent;
+	SDL_Surface* character_Surface;
+	SDL_Texture* image_Texture;
+	virtual void ChangeDirection(int _direction);
 
 protected:
 	int size [2]; //two numbers relating to the size w,h
 	int position [2]; //two numbers relating to position x,y
 	int speed; //player movement
+	float speedUp;
+	vector<float> direction;
 	string ImagePath;
 
 };

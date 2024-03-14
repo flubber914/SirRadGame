@@ -1,20 +1,21 @@
 #include "GameEngine.h"
 
-GameEngine::GameEngine()
-{
-}
 
 /// <summary>
 /// this constructor starts the game and it's loop
 /// </summary>
 GameEngine::GameEngine(SDL_Window* window)
+    : ImageRender(window)
 {
+    GWindow = GameWindow(ImageRender.GetSurface());
     //screenSurface = SDL_GetWindowSurface(window);
-    ImageRender = ImageRenderer(window);
-    int speed = 10;
+    //ImageRender = ImageRenderer(window);
+    int speed = 0;
     int size[2] = { 30, 30 }; int pos[2] = { ImageRender.GetSurface()->w / 2,ImageRender.GetSurface()->h - (ImageRender.GetSurface()->h / 8)};
     //////////////Create Main Character
     SirRad = Player(size, pos, &speed, "Images/Hi.png");
+    SirRad.Init(this);
+    //SirRad.parent = this;
     ////Initialise the game image renderer
     //////////////
     Splash(); //do the splash screen at the start of the game
@@ -103,13 +104,8 @@ void GameEngine::Input()
 /// </summary>
 void GameEngine::Update()
 {
-    if (MoveLeft) {
-        SirRad.Move(false);
-
-    }
-    if (MoveRight) {
-        SirRad.Move(true);
-    }
+    SirRad.Movement(MoveLeft, MoveRight);
+    SirRad.Move(true);
 }
 /// <summary>
 /// the drawing of all objects within the game
@@ -123,23 +119,18 @@ void GameEngine::Render()
     SDL_SetRenderDrawColor(ImageRender.GetRenderer(), 230, 122, 27, 255);
     DrawCharacter(&SirRad);
     /////////bbbbbbbbbbbbbbbbbbb/////////////s/// 
-    //SDL_RenderPresent(ImageRender.GetRenderer());
-    SDL_UpdateWindowSurface(ImageRender.GetWindow());
+    SDL_RenderPresent(ImageRender.GetRenderer());
+    //SDL_UpdateWindowSurface(ImageRender.GetWindow());
 }
 
 void GameEngine::DrawCharacter(Character* draw)
 {
     SDL_Rect rect = { draw->GetPosX(), draw->GetPosY(), draw->GetSizeW(), draw->GetSizeH() };
-    if (draw->GetImagePath() != "None") {
-        SDL_UpdateWindowSurface(ImageRender.GetWindow());
-        SDL_BlitSurface(ImageRender.loadSurface(draw->GetImagePath()), NULL, ImageRender.GetSurface(), NULL);
-    }
     SDL_RenderFillRect(ImageRender.GetRenderer(), &rect);
     SDL_RenderDrawRect(ImageRender.GetRenderer(), &rect);
-    //SDL_RenderFillRect(ImageRender.GetRenderer(), &rect);
-    //SDL_RenderDrawRect(renderer, &rect);
-
-    //SDL_RenderDrawRect(renderer, &rect);
+    if (draw->GetImagePath() != "None") {
+        SDL_RenderCopy(ImageRender.GetRenderer(), draw->image_Texture, NULL, &rect);
+    }
 }
 
 void GameEngine::Splash()

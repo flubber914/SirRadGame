@@ -7,7 +7,7 @@
 #include <list>
 #include <string>
 
-#include <SDL.h>
+#include "SDL.h"
 #include "Player.h"
 #include "ImageRenderer.h"
 #include "SplashRectangle.h"
@@ -15,15 +15,17 @@
 #include "GameOfLife.h"
 #include "ColourGame.h"
 #include <SDL_image.h>
+#include "GameWindow.h"
 
 class GameEngine
 {
 public:
-	GameEngine();
 	GameEngine(SDL_Window* window); ///constructor
 	~GameEngine(); //destructor
 	void DrawCharacter(Character* draw); //Draws all characters for the renderer
 	SDL_Surface* screenSurface;
+	GameWindow GWindow;
+	ImageRenderer ImageRender;
 private:
 	SZ_Timer aTimer;
 	Player SirRad;
@@ -32,7 +34,6 @@ private:
 	int count = 0;
 	//SDL_Renderer* renderer;
 	SDL_Event event;
-	ImageRenderer ImageRender;
 	//GameOfLife *Life;
 	ColourGame *game;
 	void GameLoop(); //the main game loop

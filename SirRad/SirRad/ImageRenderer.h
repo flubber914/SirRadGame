@@ -6,7 +6,6 @@
 class ImageRenderer
 {
 public:
-	ImageRenderer();
 	ImageRenderer(SDL_Window* window);
 	~ImageRenderer();
 	bool Init();

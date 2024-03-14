@@ -1,16 +1,16 @@
 #include "ImageRenderer.h"
 #include "GameEngine.h"
+#include <SDL.h>
+#include <SDL_image.h>
+#include <stdio.h>
 #include <string>
-
-ImageRenderer::ImageRenderer()
-{
-}
 
 ImageRenderer::ImageRenderer(SDL_Window* window)
 {
     printf("hi\n");
     gWindow = window;
     renderer = SDL_CreateRenderer(gWindow, -1, 0);
+
     Init();
 }
 
@@ -51,6 +51,7 @@ bool ImageRenderer::Init()
                 //Get window surface
                 printf("SDL_image was initialized! \n");
                 gScreenSurface = SDL_GetWindowSurface(gWindow);
+                cout << "hi" << endl;
             }
         }
     }
