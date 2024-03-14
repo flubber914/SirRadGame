@@ -137,6 +137,7 @@
     <ClCompile Include="SirRad.cpp" />
     <ClCompile Include="SplashRectangle.cpp" />
     <ClCompile Include="SZ_Timer.cpp" />
+    <ClCompile Include="Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h" />
@@ -148,6 +149,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="SplashRectangle.h" />
     <ClInclude Include="SZ_Timer.h" />
+    <ClInclude Include="Vector2D.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

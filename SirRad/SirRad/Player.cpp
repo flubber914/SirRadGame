@@ -9,6 +9,9 @@ Player::Player(int _size[2], int _position[2], int* _speed, string _ImagePath) :
 {
 	speedUp = 0;
 	MoveZone = 1;
+	velocity.X = 8;
+	velocity.Y = 8;
+	cout << velocity.magnitude() << endl;
 }
 
 Player::~Player()
@@ -22,8 +25,8 @@ Player::~Player()
 bool Player::Move(bool moveRight)
 {
 	ChangeDirection(0);
-	position[0] += speed;
-	position[1] -= speedUp;
+	position[0] += velocity.X;
+	position[1] -= velocity.Y;
 	return false;
 }
 
@@ -34,34 +37,35 @@ void Player::Movement(bool moveLeft, bool moveRight)
 		if (position[0] < parent->GWindow.GetMiddleW() + parent->GWindow.GetEighthW() && position[0] > parent->GWindow.GetMiddleW() - parent->GWindow.GetEighthW()) {///////////MIDDLE
 			ChangeMoveZone(0);
 			if (moveRight) {
-				speed += 1;
+				velocity.X += 1;
 			}
-			else if (!moveLeft && speed > 0 && rand() % 3 <= 1) {
-				speed -= 1;
+			else if (!moveLeft && velocity.X > 0 && rand() % 3 <= 1) {
+				velocity.X -= 1;
 			}
 			if (moveLeft) {
-				speed -= 1;
+				velocity.X -= 1;
 			}
-			else if (!moveRight && speed < 0 && rand() % 3 <= 1) {
-				speed += 1;
+			else if (!moveRight && velocity.X < 0 && rand() % 3 <= 1) {
+				velocity.X += 1;
 			}
 			position[1] = 350;
-			speedUp = 0;
+			velocity.Y = 0;
 		}
 		if (position[0] > parent->GWindow.GetMiddleW() + (parent->GWindow.GetEighthW()/2) && position[1]) /////////Right Side
 		{
 			ChangeMoveZone(1);
-			cout << EntrySpeed << endl;
-			cout << "hi" << endl;
-			if (speed > 0) {
+			if (velocity.X > 0) {
 				//cout << speedUp << endl;
-				speedUp = speedUp + 1;
-				speed -= 1;
+				cout << abs(parent->GWindow.GetFloor() - position[1]) << endl;
+				if (abs(parent->GWindow.GetFloor() - position[1]) < (1 / 15) * pow(position[0] - parent->GWindow.GetMiddleW() + (parent->GWindow.GetEighthW() / 2), 2)) {
+					velocity.Y = velocity.Y + 1;
+					velocity.X -= 1;
+				}
 			}
-			if (speedUp < 0) {
-				speedUp = speedUp + 1;
-				if (abs(speedUp) <= EntrySpeed) {
-					speed -= 1;
+			if (velocity.Y < 0) {
+				velocity.Y = velocity.Y + 1;
+				if (abs(velocity.Y) <= EntrySpeed) {
+					velocity.X -= 1;
 				}
 			}
 		}
@@ -69,22 +73,22 @@ void Player::Movement(bool moveLeft, bool moveRight)
 			ChangeMoveZone(1);
 			cout << EntrySpeed << endl;
 			cout << "hi" << endl;
-			if (speed < 0) {
+			if (velocity.X < 0) {
 				//cout << speedUp << endl;
-				speedUp = speedUp + 1;
-				speed += 1;
+				velocity.Y = velocity.Y + 1;
+				velocity.X += 1;
 			}
-			if (speedUp < 0) {
-				speedUp = speedUp + 1;
-				if (abs(speedUp) <= abs(EntrySpeed)) {
-					speed += 1;
+			if (velocity.Y < 0) {
+				velocity.Y = velocity.Y + 1;
+				if (abs(velocity.Y) <= abs(EntrySpeed)) {
+					velocity.X += 1;
 				}
 			}
 		}
 	}
 	else {
-		speedUp -= 0.5f;
-		speed = 0;
+		velocity.Y -= 1;
+		velocity.X = 0;
 	}
 }
 
@@ -95,7 +99,7 @@ void Player::ChangeDirection(int _direction)
 void Player::ChangeMoveZone(int newZone)
 {
 	if (newZone != MoveZone) {
-		EntrySpeed = speed;
+		EntrySpeed = velocity.X;
 		MoveZone = newZone;
 	}
 }

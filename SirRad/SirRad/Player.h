@@ -1,6 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 #include "Character.h"
+#include "Vector2D.h"
 class Player :
     public Character
 {
@@ -12,6 +13,7 @@ public:
     void Movement(bool moveLeft, bool moveRight);
     void ChangeDirection(int _direction) override;
     void ChangeMoveZone(int newZone);
+    Vector2D velocity;
 private:
     int MoveZone;
     int EntrySpeed;
