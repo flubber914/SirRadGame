@@ -56,8 +56,10 @@ void Player::Movement(bool moveLeft, bool moveRight)
 			ChangeMoveZone(1);
 			if (velocity.X > 0) {
 				//cout << speedUp << endl;
+				cout << "next frame" << endl;
 				cout << abs(parent->GWindow.GetFloor() - position[1]) << endl;
-				if (abs(parent->GWindow.GetFloor() - position[1]) < (1 / 15) * pow(position[0] - parent->GWindow.GetMiddleW() + (parent->GWindow.GetEighthW() / 2), 2)) {
+				cout << (1.0f / 15) * pow(position[0] - (parent->GWindow.GetMiddleW() + (parent->GWindow.GetEighthW() / 2)), 2) << endl;
+				if (abs(parent->GWindow.GetFloor() - position[1]) < (1.0f / 15) * pow(position[0] - (parent->GWindow.GetMiddleW() + (parent->GWindow.GetEighthW() / 2)), 2)) { ////////////////////////implement a line for the ramp
 					velocity.Y = velocity.Y + 1;
 					velocity.X -= 1;
 				}
@@ -65,7 +67,9 @@ void Player::Movement(bool moveLeft, bool moveRight)
 			if (velocity.Y < 0) {
 				velocity.Y = velocity.Y + 1;
 				if (abs(velocity.Y) <= EntrySpeed) {
-					velocity.X -= 1;
+					if (abs(parent->GWindow.GetFloor() - position[1]) < (1.0f / 15) * pow(position[0] - (parent->GWindow.GetMiddleW() + (parent->GWindow.GetEighthW() / 2)), 2)) {
+						velocity.X -= 1;
+					}
 				}
 			}
 		}

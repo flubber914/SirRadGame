@@ -6,7 +6,7 @@ class Vector2D
 public:
 	Vector2D();
 	Vector2D(int eX, int eY);
-	int X, Y;
+	float X, Y;
 	float magnitude();
 };
 #endif
