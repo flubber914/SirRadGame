@@ -36,13 +36,13 @@ void Player::Movement(bool moveLeft, bool moveRight)
 	if (position[1] > parent->GWindow.GetRampTop()) {
 		if (position[0] < parent->GWindow.GetMiddleW() + parent->GWindow.GetEighthW() && position[0] > parent->GWindow.GetMiddleW() - parent->GWindow.GetEighthW()) {///////////MIDDLE
 			ChangeMoveZone(0);
-			if (moveRight) {
+			if (moveRight && velocity.X < 15) {
 				velocity.X += 1;
 			}
 			else if (!moveLeft && velocity.X > 0 && rand() % 3 <= 1) {
 				velocity.X -= 1;
 			}
-			if (moveLeft) {
+			if (moveLeft && velocity.X > -15) {
 				velocity.X -= 1;
 			}
 			else if (!moveRight && velocity.X < 0 && rand() % 3 <= 1) {
@@ -51,47 +51,50 @@ void Player::Movement(bool moveLeft, bool moveRight)
 			position[1] = 350;
 			velocity.Y = 0;
 		}
-		if (position[0] > parent->GWindow.GetMiddleW() + (parent->GWindow.GetEighthW()/2) && position[1]) /////////Right Side
+		if (position[0] > parent->GWindow.GetMiddleW() + (parent->GWindow.GetEighthW()/2)) /////////Right Side
 		{
 			ChangeMoveZone(1);
 			if (velocity.X > 0) {
 				//cout << speedUp << endl;
-				cout << "next frame" << endl;
-				cout << abs(parent->GWindow.GetFloor() - position[1]) << endl;
-				cout << (1.0f / 15) * pow(position[0] - (parent->GWindow.GetMiddleW() + (parent->GWindow.GetEighthW() / 2)), 2) << endl;
-				if (abs(parent->GWindow.GetFloor() - position[1]) < (1.0f / 15) * pow(position[0] - (parent->GWindow.GetMiddleW() + (parent->GWindow.GetEighthW() / 2)), 2)) { ////////////////////////implement a line for the ramp
-					velocity.Y = velocity.Y + 1;
-					velocity.X -= 1;
-				}
+				velocity.Y = velocity.Y + 1;
+				velocity.X -= 1;
+			}
+			else if (velocity.Y >= 0) {
+				velocity.Y = velocity.Y - 1;
 			}
 			if (velocity.Y < 0) {
-				velocity.Y = velocity.Y + 1;
-				if (abs(velocity.Y) <= EntrySpeed) {
-					if (abs(parent->GWindow.GetFloor() - position[1]) < (1.0f / 15) * pow(position[0] - (parent->GWindow.GetMiddleW() + (parent->GWindow.GetEighthW() / 2)), 2)) {
-						velocity.X -= 1;
-					}
+				if (abs((velocity.Y + (velocity.Y * (velocity.Y - 1)))/2) >= abs(position[1] - parent->GWindow.GetFloor())) {
+					velocity.Y = velocity.Y + 1;
+					velocity.X = velocity.X - 1;
+				}
+				else {
+					velocity.Y = velocity.Y - 1;
 				}
 			}
 		}
 		if (position[0] < parent->GWindow.GetMiddleW() - (parent->GWindow.GetEighthW()/2)) { /////////////////////LEFT SIDE
 			ChangeMoveZone(1);
-			cout << EntrySpeed << endl;
-			cout << "hi" << endl;
 			if (velocity.X < 0) {
 				//cout << speedUp << endl;
 				velocity.Y = velocity.Y + 1;
 				velocity.X += 1;
 			}
+			else if (velocity.Y >= 0) {
+				velocity.Y = velocity.Y - 1;
+			}
 			if (velocity.Y < 0) {
-				velocity.Y = velocity.Y + 1;
-				if (abs(velocity.Y) <= abs(EntrySpeed)) {
-					velocity.X += 1;
+				if (abs((velocity.Y + (velocity.Y * (velocity.Y - 1))) / 2) >= abs(position[1] - parent->GWindow.GetFloor())) {
+					velocity.Y = velocity.Y + 1;
+					velocity.X = velocity.X + 1;
+				}
+				else {
+					velocity.Y = velocity.Y - 1;
 				}
 			}
 		}
 	}
 	else {
-		velocity.Y -= 1;
+		velocity.Y -= 0.5f;
 		velocity.X = 0;
 	}
 }
