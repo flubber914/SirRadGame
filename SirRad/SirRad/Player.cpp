@@ -39,13 +39,13 @@ void Player::Movement(bool moveLeft, bool moveRight)
 			if (moveRight && velocity.X < 15) {
 				velocity.X += 1;
 			}
-			else if (!moveLeft && velocity.X > 0 && rand() % 3 <= 1) {
+			else if (!moveLeft && velocity.X > 0 && rand() % 10 <= 1) {
 				velocity.X -= 1;
 			}
 			if (moveLeft && velocity.X > -15) {
 				velocity.X -= 1;
 			}
-			else if (!moveRight && velocity.X < 0 && rand() % 3 <= 1) {
+			else if (!moveRight && velocity.X < 0 && rand() % 10 <= 1) {
 				velocity.X += 1;
 			}
 			position[1] = 350;
