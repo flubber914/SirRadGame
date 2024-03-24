@@ -7,6 +7,8 @@
 GameEngine::GameEngine(SDL_Window* window)
     : ImageRender(window)
 {
+    SoundPlayer.MusicLocationVector = { "Sounds/OnStackNew.wav"};
+    SoundPlayer.MusicVector.push_back(SoundPlayer.MixMusic(SoundPlayer.MusicLocationVector[0]));
     GWindow = GameWindow(ImageRender.GetSurface());
     //screenSurface = SDL_GetWindowSurface(window);
     //ImageRender = ImageRenderer(window);
@@ -23,6 +25,7 @@ GameEngine::GameEngine(SDL_Window* window)
     //Life = &newLife.Create(screenSurface->w, screenSurface->h, renderer);
     //ColourGame newGame;
     // game = &newGame.Create(renderer);
+    Mix_PlayMusic(SoundPlayer.MusicVector[0], -1);
     GameLoop(); ////always goes last probably
 }
 

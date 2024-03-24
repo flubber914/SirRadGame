@@ -10,11 +10,13 @@
 #include "SDL.h"
 #include "Player.h"
 #include "ImageRenderer.h"
+#include "SoundPlayer.h"
 #include "SplashRectangle.h"
 #include "SZ_Timer.h"
 #include "GameOfLife.h"
 #include "ColourGame.h"
 #include <SDL_image.h>
+#include <SDL_audio.h>
 #include "GameWindow.h"
 
 class GameEngine
@@ -26,6 +28,7 @@ public:
 	SDL_Surface* screenSurface;
 	GameWindow GWindow;
 	ImageRenderer ImageRender;
+	SoundPlayer SoundPlayer;
 private:
 	SZ_Timer aTimer;
 	Player SirRad;
