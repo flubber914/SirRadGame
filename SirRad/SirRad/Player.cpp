@@ -5,7 +5,7 @@ Player::Player()
 {
 }
 
-Player::Player(int _size[2], int _position[2], int* _speed, string _ImagePath) : Character(_size, _position, _speed, _ImagePath, 1)
+Player::Player(int _size[2], int _position[2], int* _speed, string _ImagePath) : Character(_size, _position, _speed, _ImagePath, 2)
 {
 	speedUp = 0;
 	MoveZone = 1;
@@ -21,9 +21,8 @@ Player::~Player()
 /// </summary>
 /// <param name="moveRight">whether the characters input direction is right or not</param>
 /// <returns>whether the character was able to move</returns>
-bool Player::Move(bool moveRight)
+bool Player::Move()
 {
-	ChangeDirection(0);
 	position[0] += velocity.X;
 	position[1] -= velocity.Y;
 	return false;

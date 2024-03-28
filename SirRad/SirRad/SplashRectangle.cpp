@@ -12,9 +12,9 @@ SplashRectangle::~SplashRectangle()
 {
 }
 
-bool SplashRectangle::Move(bool moveRight)
+bool SplashRectangle::Move()
 {
-	if (moveRight) {
+	if (true) {
 		position[0] += speed;
 	}
 	else {

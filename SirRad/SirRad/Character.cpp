@@ -30,7 +30,7 @@ Character::~Character()
 /// This virual Function is the basis of all movement of all characters in the game
 /// </summary>
 /// <returns></returns>
-bool Character::Move(bool moveRight)
+bool Character::Move()
 {
 	return false;
 }

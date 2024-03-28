@@ -9,6 +9,7 @@
 
 #include "SDL.h"
 #include "Player.h"
+#include "Fireball.h"
 #include "ImageRenderer.h"
 #include "SoundPlayer.h"
 #include "SplashRectangle.h"
@@ -25,14 +26,14 @@ class GameEngine
 public:
 	GameEngine(SDL_Window* window); ///constructor
 	~GameEngine(); //destructor
-	void DrawCharacter(Character* draw); //Draws all characters for the renderer
 	SDL_Surface* screenSurface;
 	GameWindow GWindow;
 	ImageRenderer ImageRender;
 	SoundPlayer SoundPlayer;
+	Player SirRad;
+	Fireball works;
 private:
 	SZ_Timer aTimer;
-	Player SirRad;
 	bool quit = false;
 	bool leftMousePressed = false;
 	int count = 0;

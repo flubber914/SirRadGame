@@ -8,7 +8,7 @@ public:
     SplashRectangle();
     SplashRectangle(int _size[2], int _position[2], int* _speed);
     ~SplashRectangle();
-    bool Move(bool moveRight) override;
+    bool Move() override;
     void SetPosition(int _position[2]);
     void SetSize(int _size[2]);
 private:

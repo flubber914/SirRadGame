@@ -15,8 +15,9 @@ GameEngine::GameEngine(SDL_Window* window)
     int speed = 0;
     int size[2] = { 64, 64 }; int pos[2] = { ImageRender.GetSurface()->w / 2,ImageRender.GetSurface()->h - (ImageRender.GetSurface()->h / 8)};
     //////////////Create Main Character
-    SirRad = Player(size, pos, &speed, "Images/sprite_sheet.png");
+    SirRad = Player(size, pos, &speed, "Images/New Piskel (1).png");
     SirRad.Init(this);
+    works.Init(this);
     //SirRad.parent = this;
     ////Initialise the game image renderer
     //////////////
@@ -26,6 +27,7 @@ GameEngine::GameEngine(SDL_Window* window)
     //ColourGame newGame;
     // game = &newGame.Create(renderer);
     Mix_PlayMusic(SoundPlayer.MusicVector[0], 0);
+    works.Spawn();
     GameLoop(); ////always goes last probably
 }
 
@@ -81,13 +83,25 @@ void GameEngine::Input()
                 SirRad.CurrentSpriteClip = 0;
                 break;
             case SDLK_2:
-                SirRad.CurrentSpriteClip = 2;
+                SirRad.CurrentSpriteClip = 1;
                 break;
             case SDLK_3:
-                SirRad.CurrentSpriteClip = 1;
+                SirRad.CurrentSpriteClip = 2;
                 break;
             case SDLK_4:
                 SirRad.CurrentSpriteClip = 3;
+                break;
+            case SDLK_5:
+                SirRad.CurrentSpriteClip = 4;
+                break;
+            case SDLK_6:
+                SirRad.CurrentSpriteClip = 5;
+                break;
+            case SDLK_7:
+                SirRad.CurrentSpriteClip = 6;
+                break;
+            case SDLK_8:
+                SirRad.CurrentSpriteClip = 7;
                 break;
             default:
                 break;
@@ -119,7 +133,10 @@ void GameEngine::Input()
 void GameEngine::Update()
 {
     SirRad.Movement(MoveLeft, MoveRight);
-    SirRad.Move(true);
+    SirRad.Move();
+    if (works.GetSpawned()) {
+        works.Move();
+    }
 }
 /// <summary>
 /// the drawing of all objects within the game
@@ -132,19 +149,10 @@ void GameEngine::Render()
     SDL_RenderClear(ImageRender.GetRenderer());
     SDL_SetRenderDrawColor(ImageRender.GetRenderer(), 230, 122, 27, 255);
     ImageRender.DrawCharacter(&SirRad, &SirRad.SpriteClips[SirRad.CurrentSpriteClip]);
+    ImageRender.DrawCharacter(&works, NULL);
     /////////bbbbbbbbbbbbbbbbbbb/////////////s/// 
     SDL_RenderPresent(ImageRender.GetRenderer());
     //SDL_UpdateWindowSurface(ImageRender.GetWindow());
-}
-
-void GameEngine::DrawCharacter(Character* draw)
-{
-    SDL_Rect rect = { draw->GetPosX() - (draw->GetSizeW()/2), draw->GetPosY() - (draw->GetSizeH()/2), draw->GetSizeW(), draw->GetSizeH()};
-    SDL_RenderFillRect(ImageRender.GetRenderer(), &rect);
-    SDL_RenderDrawRect(ImageRender.GetRenderer(), &rect);
-    if (draw->GetImagePath() != "None") {
-        SDL_RenderCopy(ImageRender.GetRenderer(), draw->image_Texture, NULL, &rect);
-    }
 }
 
 void GameEngine::Splash()
@@ -181,8 +189,8 @@ void GameEngine::Splash()
             list<SplashRectangle>::iterator it;
             for (it = splashArray.begin(); it != splashArray.end(); ++it)
             {
-                it->Move(right);
-                DrawCharacter(&(*it));
+                it->Move();
+                ImageRender.DrawCharacter(&(*it));
             }
             SDL_Delay(floor((5000 / splashFrames) - aTimer.getTicks()));
             aTimer.resetTicksTimer();
