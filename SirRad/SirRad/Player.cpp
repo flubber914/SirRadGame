@@ -5,13 +5,12 @@ Player::Player()
 {
 }
 
-Player::Player(int _size[2], int _position[2], int* _speed, string _ImagePath) : Character(_size, _position, _speed, _ImagePath)
+Player::Player(int _size[2], int _position[2], int* _speed, string _ImagePath) : Character(_size, _position, _speed, _ImagePath, 1)
 {
 	speedUp = 0;
 	MoveZone = 1;
-	velocity.X = 8;
-	velocity.Y = 8;
-	cout << velocity.magnitude() << endl;
+	velocity.X = 0;
+	velocity.Y = 0;
 }
 
 Player::~Player()
@@ -48,7 +47,7 @@ void Player::Movement(bool moveLeft, bool moveRight)
 			else if (!moveRight && velocity.X < 0 && rand() % 10 <= 1) {
 				velocity.X += 1;
 			}
-			position[1] = 350;
+			position[1] = parent->ImageRender.GetSurface()->h - (parent->ImageRender.GetSurface()->h / 8);
 			velocity.Y = 0;
 		}
 		if (position[0] > parent->GWindow.GetMiddleW() + (parent->GWindow.GetEighthW()/2)) /////////Right Side

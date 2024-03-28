@@ -18,6 +18,7 @@
 #include <SDL_image.h>
 #include <SDL_audio.h>
 #include "GameWindow.h"
+#include "Character.h"
 
 class GameEngine
 {

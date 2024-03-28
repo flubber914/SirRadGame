@@ -13,9 +13,9 @@ GameEngine::GameEngine(SDL_Window* window)
     //screenSurface = SDL_GetWindowSurface(window);
     //ImageRender = ImageRenderer(window);
     int speed = 0;
-    int size[2] = { 30, 30 }; int pos[2] = { ImageRender.GetSurface()->w / 2,ImageRender.GetSurface()->h - (ImageRender.GetSurface()->h / 8)};
+    int size[2] = { 64, 64 }; int pos[2] = { ImageRender.GetSurface()->w / 2,ImageRender.GetSurface()->h - (ImageRender.GetSurface()->h / 8)};
     //////////////Create Main Character
-    SirRad = Player(size, pos, &speed, "Images/Hi.png");
+    SirRad = Player(size, pos, &speed, "Images/sprite_sheet.png");
     SirRad.Init(this);
     //SirRad.parent = this;
     ////Initialise the game image renderer
@@ -25,7 +25,7 @@ GameEngine::GameEngine(SDL_Window* window)
     //Life = &newLife.Create(screenSurface->w, screenSurface->h, renderer);
     //ColourGame newGame;
     // game = &newGame.Create(renderer);
-    Mix_PlayMusic(SoundPlayer.MusicVector[0], -1);
+    Mix_PlayMusic(SoundPlayer.MusicVector[0], 0);
     GameLoop(); ////always goes last probably
 }
 
@@ -77,6 +77,17 @@ void GameEngine::Input()
             case SDLK_d:
                 MoveRight = true;
                 break;
+            case SDLK_1:
+                SirRad.CurrentSpriteClip = 0;
+                break;
+            case SDLK_2:
+                SirRad.CurrentSpriteClip = 2;
+                break;
+            case SDLK_3:
+                SirRad.CurrentSpriteClip = 1;
+                break;
+            case SDLK_4:
+                SirRad.CurrentSpriteClip = 3;
                 break;
             default:
                 break;
@@ -120,7 +131,7 @@ void GameEngine::Render()
     SDL_SetRenderDrawColor(ImageRender.GetRenderer(), 0, 0, 0, 255);
     SDL_RenderClear(ImageRender.GetRenderer());
     SDL_SetRenderDrawColor(ImageRender.GetRenderer(), 230, 122, 27, 255);
-    DrawCharacter(&SirRad);
+    ImageRender.DrawCharacter(&SirRad, &SirRad.SpriteClips[SirRad.CurrentSpriteClip]);
     /////////bbbbbbbbbbbbbbbbbbb/////////////s/// 
     SDL_RenderPresent(ImageRender.GetRenderer());
     //SDL_UpdateWindowSurface(ImageRender.GetWindow());
@@ -128,7 +139,7 @@ void GameEngine::Render()
 
 void GameEngine::DrawCharacter(Character* draw)
 {
-    SDL_Rect rect = { draw->GetPosX(), draw->GetPosY(), draw->GetSizeW(), draw->GetSizeH() };
+    SDL_Rect rect = { draw->GetPosX() - (draw->GetSizeW()/2), draw->GetPosY() - (draw->GetSizeH()/2), draw->GetSizeW(), draw->GetSizeH()};
     SDL_RenderFillRect(ImageRender.GetRenderer(), &rect);
     SDL_RenderDrawRect(ImageRender.GetRenderer(), &rect);
     if (draw->GetImagePath() != "None") {

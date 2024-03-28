@@ -85,3 +85,19 @@ SDL_Surface* ImageRenderer::loadSurface(string path)
 
     return optimizedSurface;
 }
+
+void ImageRenderer::DrawCharacter(Character* draw, SDL_Rect* clip)
+{
+    SDL_Rect rect = { draw->GetPosX() - (draw->GetSizeW() / 2), draw->GetPosY() - (draw->GetSizeH() / 2), draw->GetSizeW(), draw->GetSizeH() };
+    SDL_RenderFillRect(renderer, &rect);
+    SDL_RenderDrawRect(renderer, &rect);
+    if (draw->GetImagePath() != "None") {
+        if (clip != NULL) 
+        {
+            rect.w = clip->w;
+            rect.h = clip->h;
+        }
+        SDL_RenderCopy(renderer, draw->image_Texture, clip, &rect);
+    }
+}
+

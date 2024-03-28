@@ -13,7 +13,7 @@ class Character
 {
 public:
 	Character();//default Constructor
-	Character(int _size[2], int _position[2], int* _speed, string _ImagePath);
+	Character(int _size[2], int _position[2], int* _speed, string _ImagePath, int _spriteRows = NULL);
 	virtual ~Character();
 	virtual bool Move(bool moveRight);
 	int GetSizeW() { return size[0]; }
@@ -27,6 +27,13 @@ public:
 	SDL_Surface* character_Surface;
 	SDL_Texture* image_Texture;
 	virtual void ChangeDirection(int _direction);
+
+
+	///FOR SPRITES
+	int spriteRows = 1;
+	int CurrentSpriteClip = 0;
+	vector<SDL_Rect> SpriteClips;
+	void LoadSprites();
 
 protected:
 	int size [2]; //two numbers relating to the size w,h
