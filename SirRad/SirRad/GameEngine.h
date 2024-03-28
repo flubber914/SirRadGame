@@ -20,6 +20,7 @@
 #include <SDL_audio.h>
 #include "GameWindow.h"
 #include "Character.h"
+#include "Collision.h"
 
 class GameEngine
 {
@@ -32,6 +33,8 @@ public:
 	SoundPlayer SoundPlayer;
 	Player SirRad;
 	Fireball works;
+	Collision Collider;
+	vector<Character*> allcharacters;
 private:
 	SZ_Timer aTimer;
 	bool quit = false;

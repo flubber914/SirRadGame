@@ -24,3 +24,9 @@ void Enemy::Attack()
 void Enemy::Damage()
 {
 }
+
+bool Enemy::DetectCollision()
+{
+
+	return false;
+}

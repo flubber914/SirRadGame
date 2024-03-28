@@ -11,6 +11,7 @@ public:
     virtual void Spawn();
     virtual void Attack();
     virtual void Damage();
+    virtual bool DetectCollision();
     bool GetSpawned() { return isSpawned; };
 protected:
     bool isSpawned = false;

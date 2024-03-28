@@ -20,6 +20,9 @@ public:
 	int GetSizeH() { return size[1]; }
 	int GetPosX() { return position[0]; }
 	int GetPosY() { return position[1]; }
+	int collisionZone[2];
+	virtual void Collide(Character other);
+	void FindCollisionZone();
 	SDL_Surface* GetSurface() { return character_Surface; }
 	virtual void Init(GameEngine* _parent);
 	string GetImagePath() { return ImagePath; }
@@ -27,6 +30,7 @@ public:
 	SDL_Surface* character_Surface;
 	SDL_Texture* image_Texture;
 	virtual void ChangeDirection(int _direction);
+
 
 
 	///FOR SPRITES

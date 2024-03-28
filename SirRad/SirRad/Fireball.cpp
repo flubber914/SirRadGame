@@ -13,6 +13,8 @@ bool Fireball::Move()
 {
 	position[0] += speed * direction[0];
 	position[1] -= speed * direction[1];
+	FindCollisionZone();
+	parent->Collider.CheckCollision(this);
 	return false;
 }
 
@@ -39,4 +41,9 @@ void Fireball::Attack()
 
 void Fireball::Damage()
 {
+}
+
+void Fireball::Collide(Character other)
+{
+	cout << "bang!" << endl;
 }

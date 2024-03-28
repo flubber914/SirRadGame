@@ -35,6 +35,15 @@ bool Character::Move()
 	return false;
 }
 
+void Character::Collide(Character other)
+{
+}
+
+void Character::FindCollisionZone()
+{
+	parent->Collider.CalculateHitZone(this);
+}
+
 void Character::Init(GameEngine* _parent)
 {
 	parent = _parent;

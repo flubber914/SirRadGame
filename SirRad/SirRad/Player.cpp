@@ -25,6 +25,8 @@ bool Player::Move()
 {
 	position[0] += velocity.X;
 	position[1] -= velocity.Y;
+	FindCollisionZone();
+	parent->Collider.CheckCollision(this);
 	return false;
 }
 
@@ -107,4 +109,9 @@ void Player::ChangeMoveZone(int newZone)
 		EntrySpeed = velocity.X;
 		MoveZone = newZone;
 	}
+}
+
+void Player::Collide(Character other)
+{
+	cout << "weeee" << endl;
 }

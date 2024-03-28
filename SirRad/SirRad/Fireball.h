@@ -12,6 +12,7 @@ public:
     void Spawn() override;
     void Attack() override;
     void Damage() override;
+    void Collide(Character other) override;
 private:
 };
 #endif

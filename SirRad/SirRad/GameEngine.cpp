@@ -10,6 +10,7 @@ GameEngine::GameEngine(SDL_Window* window)
     SoundPlayer.MusicLocationVector = { "Sounds/OnStackNew.wav"};
     SoundPlayer.MusicVector.push_back(SoundPlayer.MixMusic(SoundPlayer.MusicLocationVector[0]));
     GWindow = GameWindow(ImageRender.GetSurface());
+    Collider.Init(this);
     //screenSurface = SDL_GetWindowSurface(window);
     //ImageRender = ImageRenderer(window);
     int speed = 0;
@@ -18,6 +19,8 @@ GameEngine::GameEngine(SDL_Window* window)
     SirRad = Player(size, pos, &speed, "Images/New Piskel (1).png");
     SirRad.Init(this);
     works.Init(this);
+    allcharacters.push_back(&SirRad);
+    allcharacters.push_back(&works);
     //SirRad.parent = this;
     ////Initialise the game image renderer
     //////////////
@@ -172,7 +175,6 @@ void GameEngine::Splash()
         int size[2] = { (screenWidth *5), (ceil(screenHeight / rectangles)) }; int pos[2] = { xpos, ypos };
         ypos += ceil(screenHeight / rectangles);
         xpos -= ceil(screenWidth / rectangles);
-        cout << "position: " << ypos << endl;
         //////////////Create Starting Objects
         SplashRectangle* newRectangle = new SplashRectangle(size, pos, &speed);
         splashArray.push_back(*newRectangle);
