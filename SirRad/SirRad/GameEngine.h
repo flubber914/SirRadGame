@@ -21,6 +21,7 @@
 #include "GameWindow.h"
 #include "Character.h"
 #include "Collision.h"
+#include "EnemyContainer.h"
 
 class GameEngine
 {
@@ -32,9 +33,10 @@ public:
 	ImageRenderer ImageRender;
 	SoundPlayer SoundPlayer;
 	Player SirRad;
-	Fireball works;
 	Collision Collider;
 	vector<Character*> allcharacters;
+	vector<EnemyContainer*> enemyContainers;
+	float totalTime = 0;
 private:
 	SZ_Timer aTimer;
 	bool quit = false;
@@ -57,6 +59,10 @@ private:
 	//splash screen
 	int splashFrames = 300;
 	void Splash();
+
+	//enemies
+	void UpdateContainers();
+	void RenderContainers();
 };
 #endif
 

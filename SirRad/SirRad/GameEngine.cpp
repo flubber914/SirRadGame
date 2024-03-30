@@ -18,9 +18,7 @@ GameEngine::GameEngine(SDL_Window* window)
     //////////////Create Main Character
     SirRad = Player(size, pos, &speed, "Images/New Piskel (1).png");
     SirRad.Init(this);
-    works.Init(this);
-    allcharacters.push_back(&SirRad);
-    allcharacters.push_back(&works);
+    enemyContainers.push_back(new EnemyContainer(10, EnemyContainer::fireball, 5, 3, this));
     //SirRad.parent = this;
     ////Initialise the game image renderer
     //////////////
@@ -30,7 +28,6 @@ GameEngine::GameEngine(SDL_Window* window)
     //ColourGame newGame;
     // game = &newGame.Create(renderer);
     Mix_PlayMusic(SoundPlayer.MusicVector[0], 0);
-    works.Spawn();
     GameLoop(); ////always goes last probably
 }
 
@@ -56,6 +53,7 @@ void GameEngine::GameLoop()
 
         //Update screen
         //SDL_RenderPresent(gRenderer);
+        totalTime += 16.667 - aTimer.getTicks();
         SDL_Delay(16.667 - aTimer.getTicks());
     }
 }
@@ -137,9 +135,7 @@ void GameEngine::Update()
 {
     SirRad.Movement(MoveLeft, MoveRight);
     SirRad.Move();
-    if (works.GetSpawned()) {
-        works.Move();
-    }
+    UpdateContainers();
 }
 /// <summary>
 /// the drawing of all objects within the game
@@ -152,7 +148,7 @@ void GameEngine::Render()
     SDL_RenderClear(ImageRender.GetRenderer());
     SDL_SetRenderDrawColor(ImageRender.GetRenderer(), 230, 122, 27, 255);
     ImageRender.DrawCharacter(&SirRad, &SirRad.SpriteClips[SirRad.CurrentSpriteClip]);
-    ImageRender.DrawCharacter(&works, NULL);
+    RenderContainers();
     /////////bbbbbbbbbbbbbbbbbbb/////////////s/// 
     SDL_RenderPresent(ImageRender.GetRenderer());
     //SDL_UpdateWindowSurface(ImageRender.GetWindow());
@@ -209,4 +205,21 @@ void GameEngine::Splash()
         right = !right;
     }
     //////////////////////
+}
+
+void GameEngine::UpdateContainers()
+{
+    for (int i = 0; i < enemyContainers.size(); i++)
+    {
+        enemyContainers[i]->Spawn();
+        enemyContainers[i]->ControlContained();
+    }
+}
+
+void GameEngine::RenderContainers()
+{
+    for (int i = 0; i < enemyContainers.size(); i++)
+    {
+        enemyContainers[i]->RenderContained();
+    }
 }

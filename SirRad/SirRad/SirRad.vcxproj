@@ -131,6 +131,7 @@
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="ColourGame.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyContainer.cpp" />
     <ClCompile Include="Fireball.cpp" />
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="GameOfLife.cpp" />
@@ -148,6 +149,7 @@
     <ClInclude Include="Collision.h" />
     <ClInclude Include="ColourGame.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyContainer.h" />
     <ClInclude Include="Fireball.h" />
     <ClInclude Include="GameEngine.h" />
     <ClInclude Include="GameOfLife.h" />

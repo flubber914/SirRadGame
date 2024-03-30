@@ -54,6 +54,7 @@ void Character::Init(GameEngine* _parent)
 			LoadSprites();
 		}
 	}
+	parent->allcharacters.push_back(this);
 }
 
 void Character::ChangeDirection(int _direction)
