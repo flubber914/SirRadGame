@@ -59,17 +59,20 @@ void Collision::CheckCollision(Character* thisChar)
 	{
 		if ((parent->allcharacters[i]->collisionZone[0] == thisChar->collisionZone[0]) && (parent->allcharacters[i]->collisionZone[1] == thisChar->collisionZone[1]))
 		{
-			if (parent->allcharacters[i] != thisChar)
+			if (parent->allcharacters[i]->GetSpawned())
 			{
-				ListLXBound = parent->allcharacters[i]->GetPosX();
-				ListRXBound = parent->allcharacters[i]->GetPosX() + parent->allcharacters[i]->GetSizeW();
-				ListTYBound = parent->allcharacters[i]->GetPosY();
-				ListBYBound = parent->allcharacters[i]->GetPosY() + parent->allcharacters[i]->GetSizeH();
-				if ((ThisRXBound > ListLXBound) && (ThisLXBound < ListRXBound)) 
+				if (parent->allcharacters[i] != thisChar)
 				{
-					if ((ThisTYBound < ListBYBound) && (ThisBYBound > ListTYBound))
+					ListLXBound = parent->allcharacters[i]->GetPosX();
+					ListRXBound = parent->allcharacters[i]->GetPosX() + parent->allcharacters[i]->GetSizeW();
+					ListTYBound = parent->allcharacters[i]->GetPosY();
+					ListBYBound = parent->allcharacters[i]->GetPosY() + parent->allcharacters[i]->GetSizeH();
+					if ((ThisRXBound > ListLXBound) && (ThisLXBound < ListRXBound))
 					{
-						thisChar->Collide(*parent->allcharacters[i]);
+						if ((ThisTYBound < ListBYBound) && (ThisBYBound > ListTYBound))
+						{
+							thisChar->Collide(parent->allcharacters[i]);
+						}
 					}
 				}
 			}

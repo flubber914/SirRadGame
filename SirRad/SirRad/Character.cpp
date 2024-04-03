@@ -35,7 +35,7 @@ bool Character::Move()
 	return false;
 }
 
-void Character::Collide(Character other)
+void Character::Collide(Character* other)
 {
 }
 

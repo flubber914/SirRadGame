@@ -12,9 +12,12 @@ public:
     virtual void Attack();
     virtual void Damage();
     virtual bool DetectCollision();
-    bool GetSpawned() { return isSpawned; };
+    bool GetThrowing() { return throwing; };
+    vector<float> GetDirection() { return direction; };
 protected:
-    bool isSpawned = false;
+    void CheckBoundaries();
+    vector<float> direction = { 0, 0 };
+    bool throwing = false;
 };
 #endif
 

@@ -7,7 +7,7 @@
 
 int main(int argc, char* argv[])
 {
-    srand(time(0));
+    srand(time(NULL));
     bool exit = false;
     //Try to initialise.. if we can't, then exit this program:
     //if (SDL_Init(SDL_INIT_EVERYTHING) < 0)

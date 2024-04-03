@@ -1,5 +1,8 @@
 #include "EnemyContainer.h"
 #include "GameEngine.h"
+#include "Fireball.h"
+#include "Orc.h"
+#include "Axe.h"
 
 EnemyContainer::EnemyContainer(int _count, EnemyTypes enemyType, float _spawnDelay, float _spawnWait, GameEngine* _parent)
 {
@@ -41,7 +44,7 @@ void EnemyContainer::RenderContained()
 
 void EnemyContainer::Spawn()
 {
-	if ((parent->totalTime > spawnDelay) && ((parent->totalTime - lastSpawn) > spawnWait)) 
+	if ((parent->totalTime > spawnDelay) && ((parent->totalTime - lastSpawn) > spawnWait) || spawnWait == -1000) 
 	{
 		for (int i = 0; i < containedEnemy.size(); i++)
 		{
@@ -64,6 +67,12 @@ void EnemyContainer::CreateEnemies(int _count, EnemyTypes enemyType)
 		{
 		case fireball:
 			newEnemy =  new Fireball();
+			break;
+		case orc:
+			newEnemy = new Orc();
+			break;
+		case axe:
+			newEnemy = new Axe();
 			break;
 		default:
 			cout << "ERROR: not an enemy type" << endl;

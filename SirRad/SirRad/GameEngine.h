@@ -9,7 +9,6 @@
 
 #include "SDL.h"
 #include "Player.h"
-#include "Fireball.h"
 #include "ImageRenderer.h"
 #include "SoundPlayer.h"
 #include "SplashRectangle.h"

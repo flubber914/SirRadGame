@@ -7,10 +7,12 @@ Player::Player()
 
 Player::Player(int _size[2], int _position[2], int* _speed, string _ImagePath) : Character(_size, _position, _speed, _ImagePath, 2)
 {
+	name = "SirRad";
 	speedUp = 0;
 	MoveZone = 1;
 	velocity.X = 0;
 	velocity.Y = 0;
+	isSpawned = true;
 }
 
 Player::~Player()
@@ -111,7 +113,7 @@ void Player::ChangeMoveZone(int newZone)
 	}
 }
 
-void Player::Collide(Character other)
+void Player::Collide(Character* other)
 {
 	cout << "weeee" << endl;
 }

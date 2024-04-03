@@ -21,7 +21,7 @@ public:
 	int GetPosX() { return position[0]; }
 	int GetPosY() { return position[1]; }
 	int collisionZone[2];
-	virtual void Collide(Character other);
+	virtual void Collide(Character* other);
 	void FindCollisionZone();
 	SDL_Surface* GetSurface() { return character_Surface; }
 	virtual void Init(GameEngine* _parent);
@@ -30,6 +30,7 @@ public:
 	SDL_Surface* character_Surface;
 	SDL_Texture* image_Texture;
 	virtual void ChangeDirection(int _direction);
+	bool GetSpawned() { return isSpawned; };
 
 
 
@@ -39,6 +40,9 @@ public:
 	vector<SDL_Rect> SpriteClips;
 	void LoadSprites();
 
+	///DETAILS
+	string name;
+
 protected:
 	int size [2]; //two numbers relating to the size w,h
 	int position [2]; //two numbers relating to position x,y
@@ -47,6 +51,6 @@ protected:
 	float speedUp;
 	vector<float> direction;
 	string ImagePath;
-
+	bool isSpawned = false;
 };
 #endif

@@ -1,19 +1,21 @@
-#ifndef FIREBALL_H
-#define FIREBALL_H
+#ifndef AXE_H
+#define AXE_H
 #include "Enemy.h"
-class Fireball :
+
+class EnemyContainer;
+
+class Axe :
     public Enemy
 {
 public:
-    Fireball();
-    ~Fireball();
+    Axe();
+    ~Axe();
     bool Move() override;
     void Death() override;
     void Spawn() override;
-    void Attack() override;
-    void Damage() override;
     void Collide(Character* other) override;
+    EnemyContainer* OrcContainer;
 private:
+    bool axeHit = false;
 };
 #endif
-

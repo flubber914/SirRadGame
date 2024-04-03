@@ -1,4 +1,5 @@
 #include "Enemy.h"
+#include "GameEngine.h"
 
 Enemy::Enemy(int _size[2], int _position[2], int* _speed, string _ImagePath, int _spriteRows) : Character(_size, _position, _speed, _ImagePath, _spriteRows)
 {
@@ -29,4 +30,16 @@ bool Enemy::DetectCollision()
 {
 
 	return false;
+}
+
+void Enemy::CheckBoundaries()
+{
+	if ((position[0] < 0 - size[0]) || (position[0] > (parent->GWindow.GetWindow()->w) + size[0])) 
+	{
+		Death();
+	}
+	if ((position[1] <= 0) || (position[1] > (parent->GWindow.GetWindow()->h + size[1])))
+	{
+		Death();
+	}
 }

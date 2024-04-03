@@ -19,6 +19,8 @@ GameEngine::GameEngine(SDL_Window* window)
     SirRad = Player(size, pos, &speed, "Images/New Piskel (1).png");
     SirRad.Init(this);
     enemyContainers.push_back(new EnemyContainer(10, EnemyContainer::fireball, 5, 3, this));
+    enemyContainers.push_back(new EnemyContainer(10, EnemyContainer::orc, 10, 10, this));
+    enemyContainers.push_back(new EnemyContainer(10, EnemyContainer::axe, -1, -1, this));
     //SirRad.parent = this;
     ////Initialise the game image renderer
     //////////////
@@ -211,7 +213,10 @@ void GameEngine::UpdateContainers()
 {
     for (int i = 0; i < enemyContainers.size(); i++)
     {
-        enemyContainers[i]->Spawn();
+        if (enemyContainers[i]->GetSpawnWait() != -1000)
+        {
+            enemyContainers[i]->Spawn();
+        }
         enemyContainers[i]->ControlContained();
     }
 }
