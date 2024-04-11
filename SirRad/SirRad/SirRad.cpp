@@ -13,7 +13,7 @@ int main(int argc, char* argv[])
     //if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
         //  return 1;
     //Create a window
-    SDL_Window* window = SDL_CreateWindow("Sir Rad!", 100, 100, 800, 400, SDL_WINDOW_SHOWN);
+    SDL_Window* window = SDL_CreateWindow("16598945 - Sir Rad!", 100, 100, 800, 400, SDL_WINDOW_SHOWN);
 
     GameEngine theGame = GameEngine(window);
     //Finally, exit
