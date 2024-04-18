@@ -59,6 +59,15 @@ void Character::Init(GameEngine* _parent)
 
 void Character::ChangeDirection(int _direction)
 {
+	cout << direction[0] << endl;
+	if (direction[0] >= 0) 
+	{
+		CharacterFlip = SDL_FLIP_NONE;
+	}
+	else 
+	{
+		CharacterFlip = SDL_FLIP_HORIZONTAL;
+	}
 }
 
 void Character::LoadSprites()

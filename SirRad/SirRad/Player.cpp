@@ -5,7 +5,7 @@ Player::Player()
 {
 }
 
-Player::Player(int _size[2], int _position[2], int* _speed, string _ImagePath) : Character(_size, _position, _speed, _ImagePath, 2)
+Player::Player(int _size[2], int _position[2], int* _speed, string _ImagePath) : Character(_size, _position, _speed, _ImagePath, 5)
 {
 	name = "SirRad";
 	speedUp = 0;

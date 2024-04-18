@@ -39,6 +39,7 @@ public:
 	int CurrentSpriteClip = 0;
 	vector<SDL_Rect> SpriteClips;
 	void LoadSprites();
+	SDL_RendererFlip CharacterFlip = SDL_FLIP_NONE;
 
 	///DETAILS
 	string name;

@@ -92,12 +92,16 @@ void ImageRenderer::DrawCharacter(Character* draw, SDL_Rect* clip)
     SDL_RenderFillRect(renderer, &rect);
     SDL_RenderDrawRect(renderer, &rect);
     if (draw->GetImagePath() != "None") {
+        SDL_Point window_position = {         //    Position of window
+            draw->GetPosX(),
+            draw->GetPosY()
+        };
         if (clip != NULL) 
         {
             rect.w = clip->w;
             rect.h = clip->h;
         }
-        SDL_RenderCopy(renderer, draw->image_Texture, clip, &rect);
+        SDL_RenderCopyEx(renderer, draw->image_Texture, clip, &rect, 0, &window_position, draw->CharacterFlip);
     }
 }
 

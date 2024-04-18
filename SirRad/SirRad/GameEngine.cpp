@@ -16,7 +16,7 @@ GameEngine::GameEngine(SDL_Window* window)
     int speed = 0;
     int size[2] = { 64, 64 }; int pos[2] = { ImageRender.GetSurface()->w / 2,ImageRender.GetSurface()->h - (ImageRender.GetSurface()->h / 8)};
     //////////////Create Main Character
-    SirRad = Player(size, pos, &speed, "Images/New Piskel (1).png");
+    SirRad = Player(size, pos, &speed, "Images/SirRadSheet.png");
     SirRad.Init(this);
     enemyContainers.push_back(new EnemyContainer(10, EnemyContainer::fireball, 5, 3, this));
     enemyContainers.push_back(new EnemyContainer(10, EnemyContainer::orc, 10, 10, this));
@@ -137,6 +137,7 @@ void GameEngine::Update()
 {
     SirRad.Movement(MoveLeft, MoveRight);
     SirRad.Move();
+    SirRad.ChangeDirection(0);
     UpdateContainers();
 }
 /// <summary>
