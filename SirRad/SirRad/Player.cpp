@@ -29,6 +29,7 @@ bool Player::Move()
 	position[1] -= velocity.Y;
 	FindCollisionZone();
 	parent->Collider.CheckCollision(this);
+	SetRotation();
 	return false;
 }
 
@@ -103,6 +104,14 @@ void Player::Movement(bool moveLeft, bool moveRight)
 
 void Player::ChangeDirection(int _direction)
 {
+	if (velocity.X > 0)
+	{
+		CharacterFlip = SDL_FLIP_NONE;
+	}
+	else if (velocity.X < 0)
+	{
+		CharacterFlip = SDL_FLIP_HORIZONTAL;
+	}
 }
 
 void Player::ChangeMoveZone(int newZone)
@@ -116,4 +125,38 @@ void Player::ChangeMoveZone(int newZone)
 void Player::Collide(Character* other)
 {
 	cout << "weeee" << endl;
+}
+
+void Player::SetRotation()
+{
+
+	if (position[0] > parent->GWindow.GetMiddleW() + (parent->GWindow.GetEighthW() / 2)) /////////Right Side
+	{
+		Rotation = 0 - abs((15-abs(velocity.X))* 6);
+	}
+	else if (position[0] < parent->GWindow.GetMiddleW() - (parent->GWindow.GetEighthW() / 2))
+	{
+		Rotation = abs((15 - abs(velocity.X)) * 6);
+	}
+	else 
+	{
+		Rotation = 0;
+	}
+}
+
+void Player::Animate()
+{
+	if ((parent->totalTime - lastFrame) > 250)
+	{
+		CurrentSpriteClip = (((currentAnimation - 1) * 4) + currentFrame);
+		currentFrame++;
+		if (currentFrame == 4) {
+			currentFrame = 0;
+			if (currentAnimation == 3 || currentAnimation == 4 || currentAnimation == 5 )
+			{
+				currentAnimation = 1;
+			}
+		}
+		lastFrame = parent->totalTime;
+	}
 }

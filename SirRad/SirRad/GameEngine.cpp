@@ -78,33 +78,23 @@ void GameEngine::Input()
                 break;
             case SDLK_a:
                 MoveLeft = true;
+                SirRad.currentAnimation = 2;
                 break;
             case SDLK_d:
                 MoveRight = true;
+                SirRad.currentAnimation = 2;
                 break;
-            case SDLK_1:
-                SirRad.CurrentSpriteClip = 0;
+            case SDLK_q:
+                SirRad.currentAnimation = 3;
+                SirRad.currentFrame = 0;
                 break;
-            case SDLK_2:
-                SirRad.CurrentSpriteClip = 1;
+            case SDLK_e:
+                SirRad.currentAnimation = 4;
+                SirRad.currentFrame = 0;
                 break;
-            case SDLK_3:
-                SirRad.CurrentSpriteClip = 2;
-                break;
-            case SDLK_4:
-                SirRad.CurrentSpriteClip = 3;
-                break;
-            case SDLK_5:
-                SirRad.CurrentSpriteClip = 4;
-                break;
-            case SDLK_6:
-                SirRad.CurrentSpriteClip = 5;
-                break;
-            case SDLK_7:
-                SirRad.CurrentSpriteClip = 6;
-                break;
-            case SDLK_8:
-                SirRad.CurrentSpriteClip = 7;
+            case SDLK_f:
+                SirRad.currentAnimation = 5;
+                SirRad.currentFrame = 0;
                 break;
             default:
                 break;
@@ -115,9 +105,11 @@ void GameEngine::Input()
             {
             case SDLK_a:
                 MoveLeft = false;
+                SirRad.currentAnimation = 1;
                 break;
             case SDLK_d:
                 MoveRight = false;
+                SirRad.currentAnimation = 1;
                 break;
             default:
                 break;
@@ -138,6 +130,7 @@ void GameEngine::Update()
     SirRad.Movement(MoveLeft, MoveRight);
     SirRad.Move();
     SirRad.ChangeDirection(0);
+    SirRad.Animate();
     UpdateContainers();
 }
 /// <summary>
@@ -149,7 +142,7 @@ void GameEngine::Render()
     //game.
     SDL_SetRenderDrawColor(ImageRender.GetRenderer(), 0, 0, 0, 255);
     SDL_RenderClear(ImageRender.GetRenderer());
-    SDL_SetRenderDrawColor(ImageRender.GetRenderer(), 230, 122, 27, 255);
+    SDL_SetRenderDrawColor(ImageRender.GetRenderer(), 0, 0, 0, 0);
     ImageRender.DrawCharacter(&SirRad, &SirRad.SpriteClips[SirRad.CurrentSpriteClip]);
     RenderContainers();
     /////////bbbbbbbbbbbbbbbbbbb/////////////s/// 

@@ -59,14 +59,18 @@ void Character::Init(GameEngine* _parent)
 
 void Character::ChangeDirection(int _direction)
 {
-	cout << direction[0] << endl;
-	if (direction[0] >= 0) 
+}
+
+void Character::Animate()
+{
+	if ((parent->totalTime - lastFrame) > 250)
 	{
-		CharacterFlip = SDL_FLIP_NONE;
-	}
-	else 
-	{
-		CharacterFlip = SDL_FLIP_HORIZONTAL;
+		CurrentSpriteClip = (((currentAnimation - 1) * 4) + currentFrame);
+		currentFrame++;
+		if (currentFrame == 5) {
+			currentFrame = 0;
+		}
+		lastFrame = parent->totalTime;
 	}
 }
 

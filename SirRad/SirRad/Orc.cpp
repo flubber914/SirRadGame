@@ -39,7 +39,6 @@ void Orc::Spawn()
 {
 	speed = 1;
 	AxeContainer = parent->enemyContainers[4];
-	cout << parent->enemyContainers.size() << endl;
 	int side = rand() % 2;
 	size[0] = 64;
 	size[1] = 64;

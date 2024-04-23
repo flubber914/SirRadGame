@@ -101,7 +101,8 @@ void ImageRenderer::DrawCharacter(Character* draw, SDL_Rect* clip)
             rect.w = clip->w;
             rect.h = clip->h;
         }
-        SDL_RenderCopyEx(renderer, draw->image_Texture, clip, &rect, 0, &window_position, draw->CharacterFlip);
+        cout << draw->CharacterFlip << endl;
+        SDL_RenderCopyEx(renderer, draw->image_Texture, clip, &rect, draw->Rotation, NULL, draw->CharacterFlip);
     }
 }
 

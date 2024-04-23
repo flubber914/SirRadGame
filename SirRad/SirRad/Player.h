@@ -14,6 +14,8 @@ public:
     void ChangeDirection(int _direction) override;
     void ChangeMoveZone(int newZone);
     void Collide(Character* other) override;
+    void SetRotation();
+    void Animate() override;
     Vector2D velocity;
 private:
     int MoveZone;

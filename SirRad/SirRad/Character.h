@@ -40,6 +40,14 @@ public:
 	vector<SDL_Rect> SpriteClips;
 	void LoadSprites();
 	SDL_RendererFlip CharacterFlip = SDL_FLIP_NONE;
+	double Rotation = 0;
+
+	//For Animations
+	virtual void Animate();
+	int currentAnimation = 1;
+	int currentFrame = 0;
+	float lastFrame = 0;
+
 
 	///DETAILS
 	string name;
