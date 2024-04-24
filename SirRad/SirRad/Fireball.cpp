@@ -36,6 +36,7 @@ void Fireball::Spawn()
 	direction[0] = (((float)position[0] - (float)parent->SirRad.GetPosX()) / (float)parent->GWindow.GetWindow()->w);
 	direction[1] = (((float)position[1] - (float)parent->SirRad.GetPosY()) / (float)parent->GWindow.GetWindow()->h);
 	isSpawned = true;
+	hit = false;
 }
 
 void Fireball::Attack()
@@ -49,7 +50,18 @@ void Fireball::Damage()
 void Fireball::Collide(Character* other)
 {
 	cout << other->name << endl;
-	if (other->name == "SirRad") {
-		Death();
+	if (other->name == "SirRad" && !hit) {
+		hit = true;
+		if (parent->SirRad.performingTrick)
+		{
+			cout << "dodged with trick" << endl;
+			parent->ChangeScore(500);
+		}
+		else
+		{
+			cout << "Fireball Hit!" << endl;
+			parent->ChangeScore(-300);
+			Death();
+		}
 	}
 }

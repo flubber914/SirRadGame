@@ -15,6 +15,7 @@ public:
 	SDL_Window* GetWindow() { return gWindow; };
 	SDL_Surface* loadSurface(std::string path);
 	void DrawCharacter(Character* draw, SDL_Rect* clip = NULL);
+	void DrawText();
 private:
 	SDL_Renderer* renderer;
 	SDL_Window* gWindow;

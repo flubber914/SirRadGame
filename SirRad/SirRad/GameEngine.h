@@ -6,6 +6,7 @@
 #include <iostream>
 #include <list>
 #include <string>
+#include <SDL_ttf.h>
 
 #include "SDL.h"
 #include "Player.h"
@@ -36,11 +37,13 @@ public:
 	vector<Character*> allcharacters;
 	vector<EnemyContainer*> enemyContainers;
 	float totalTime = 0;
+	void ChangeScore(int change);
 private:
 	SZ_Timer aTimer;
 	bool quit = false;
 	bool leftMousePressed = false;
 	int count = 0;
+	int GameScore = 0;
 	//SDL_Renderer* renderer;
 	SDL_Event event;
 	//GameOfLife *Life;
@@ -62,6 +65,16 @@ private:
 	//enemies
 	void UpdateContainers();
 	void RenderContainers();
+
+	//Score
+	TTF_Font* Sans;
+	SDL_Color textColour;
+	void DrawText();
+	string textMessage;
+	SDL_Surface* surfaceMessage;
+	SDL_Texture* Message;
+	SDL_Rect Message_rect;
+	// font from https://www.fontspace.com/category/open-source?p=2
 };
 #endif
 

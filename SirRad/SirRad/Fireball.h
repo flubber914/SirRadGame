@@ -13,6 +13,7 @@ public:
     void Attack() override;
     void Damage() override;
     void Collide(Character* other) override;
+    bool hit = false;
 private:
 };
 #endif

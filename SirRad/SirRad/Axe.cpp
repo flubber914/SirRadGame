@@ -63,7 +63,17 @@ void Axe::Collide(Character* other)
 		if (other->name == "SirRad")
 		{
 			axeHit = true;
-			cout << "The axe is lit" << endl;
+			if (parent->SirRad.performingTrick) 
+			{
+				cout << "dodged with trick" << endl;
+				parent->ChangeScore(500);
+			}
+			else 
+			{
+				cout << "Axe Hit!" << endl;
+				parent->ChangeScore(-300);
+				Death();
+			}
 		}
 	}
 }

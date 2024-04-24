@@ -27,7 +27,6 @@ void GameOfLife::ScreenClick(int x, int y)
 	if (x < screenHeight && y < screenHeight)
 	{
 		grid[y / (screenHeight / Ysize)][x / (screenHeight / Xsize)] = true;
-		cout << y << endl;
 		printf("eh?");
 	}
 }

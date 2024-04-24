@@ -16,7 +16,10 @@ public:
     void Collide(Character* other) override;
     void SetRotation();
     void Animate() override;
+    void DoTrick(int type);
     Vector2D velocity;
+    bool performingTrick = false;
+    int trickType = 0;
 private:
     int MoveZone;
     int EntrySpeed;

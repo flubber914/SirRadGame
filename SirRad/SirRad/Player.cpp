@@ -146,7 +146,7 @@ void Player::SetRotation()
 
 void Player::Animate()
 {
-	if ((parent->totalTime - lastFrame) > 250)
+	if ((parent->totalTime - lastFrame) > 100)
 	{
 		CurrentSpriteClip = (((currentAnimation - 1) * 4) + currentFrame);
 		currentFrame++;
@@ -154,9 +154,40 @@ void Player::Animate()
 			currentFrame = 0;
 			if (currentAnimation == 3 || currentAnimation == 4 || currentAnimation == 5 )
 			{
+				switch (currentAnimation)
+				{
+				case 3:
+					parent->ChangeScore(200);
+					break;
+				case 4:
+					parent->ChangeScore(600);
+					break;
+				case 5:
+					parent->ChangeScore(600);
+					break;
+				default:
+					break;
+				}
 				currentAnimation = 1;
+				performingTrick = false;
+				trickType = 0;
 			}
 		}
 		lastFrame = parent->totalTime;
+	}
+}
+
+void Player::DoTrick(int trick)
+{
+	if (!performingTrick)
+	{
+		trickType = trick;
+		if (position[1] > parent->GWindow.GetRampTop() && (trick == 4 || trick == 5)) 
+		{
+			return;
+		}
+		currentAnimation = trick;
+		currentFrame = 0;
+		performingTrick = true;
 	}
 }

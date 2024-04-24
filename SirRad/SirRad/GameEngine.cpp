@@ -7,8 +7,9 @@
 GameEngine::GameEngine(SDL_Window* window)
     : ImageRender(window)
 {
-    SoundPlayer.MusicLocationVector = { "Sounds/OnStackNew.wav"};
+    SoundPlayer.MusicLocationVector = { "Sounds/PUNK_SKATE_TO-KNIGHT_OK_PROD._PAYMAN_192BPM.mp3"};
     SoundPlayer.MusicVector.push_back(SoundPlayer.MixMusic(SoundPlayer.MusicLocationVector[0]));
+    Mix_PlayMusic(SoundPlayer.MusicVector[0], 0);
     GWindow = GameWindow(ImageRender.GetSurface());
     Collider.Init(this);
     //screenSurface = SDL_GetWindowSurface(window);
@@ -21,6 +22,12 @@ GameEngine::GameEngine(SDL_Window* window)
     enemyContainers.push_back(new EnemyContainer(10, EnemyContainer::fireball, 5, 3, this));
     enemyContainers.push_back(new EnemyContainer(10, EnemyContainer::orc, 10, 10, this));
     enemyContainers.push_back(new EnemyContainer(10, EnemyContainer::axe, -1, -1, this));
+    TTF_Init();
+    Sans = TTF_OpenFont("Text/RujisHandwritingFontV20-vrqZ.ttf", 24);
+    /*SDL_Color textColour = { 255, 255, 255 };
+    string textMessage = "SCORE: " + to_string(GameScore);
+    surfaceMessage = TTF_RenderText_Solid(Sans, textMessage.c_str(), textColour);
+    Message = SDL_CreateTextureFromSurface(ImageRender.GetRenderer(), surfaceMessage);*/
     //SirRad.parent = this;
     ////Initialise the game image renderer
     //////////////
@@ -29,12 +36,26 @@ GameEngine::GameEngine(SDL_Window* window)
     //Life = &newLife.Create(screenSurface->w, screenSurface->h, renderer);
     //ColourGame newGame;
     // game = &newGame.Create(renderer);
-    Mix_PlayMusic(SoundPlayer.MusicVector[0], 0);
+    Message_rect.x = 0;
+    Message_rect.y = 0;
+    Message_rect.w = 100;
+    Message_rect.h = 50;
     GameLoop(); ////always goes last probably
 }
 
 GameEngine::~GameEngine()
 {
+    TTF_CloseFont(Sans);
+    //SDL_FreeSurface(surfaceMessage);
+    SDL_DestroyTexture(Message);
+    TTF_Quit();
+    cout << "Text Unloaded" << endl;
+    cout << "GameEngine Unloaded" << endl;
+}
+
+void GameEngine::ChangeScore(int change)
+{
+    GameScore += change;
 }
 
 void GameEngine::GameLoop()
@@ -79,22 +100,21 @@ void GameEngine::Input()
             case SDLK_a:
                 MoveLeft = true;
                 SirRad.currentAnimation = 2;
+                SirRad.performingTrick = false;
                 break;
             case SDLK_d:
                 MoveRight = true;
                 SirRad.currentAnimation = 2;
+                SirRad.performingTrick = false;
                 break;
             case SDLK_q:
-                SirRad.currentAnimation = 3;
-                SirRad.currentFrame = 0;
+                SirRad.DoTrick(3);
                 break;
             case SDLK_e:
-                SirRad.currentAnimation = 4;
-                SirRad.currentFrame = 0;
+                SirRad.DoTrick(4);
                 break;
             case SDLK_f:
-                SirRad.currentAnimation = 5;
-                SirRad.currentFrame = 0;
+                SirRad.DoTrick(5);
                 break;
             default:
                 break;
@@ -145,6 +165,7 @@ void GameEngine::Render()
     SDL_SetRenderDrawColor(ImageRender.GetRenderer(), 0, 0, 0, 0);
     ImageRender.DrawCharacter(&SirRad, &SirRad.SpriteClips[SirRad.CurrentSpriteClip]);
     RenderContainers();
+    DrawText();
     /////////bbbbbbbbbbbbbbbbbbb/////////////s/// 
     SDL_RenderPresent(ImageRender.GetRenderer());
     //SDL_UpdateWindowSurface(ImageRender.GetWindow());
@@ -220,5 +241,22 @@ void GameEngine::RenderContainers()
     for (int i = 0; i < enemyContainers.size(); i++)
     {
         enemyContainers[i]->RenderContained();
+    }
+}
+
+void GameEngine::DrawText()
+{
+    TTF_Init();
+    SDL_RenderCopy(ImageRender.GetRenderer(), Message, NULL, &Message_rect);
+    if (("SCORE: " + to_string(GameScore)) != (textMessage))
+    {
+        SDL_DestroyTexture(Message);
+        //Sans = TTF_OpenFont("Text/RujisHandwritingFontV20-vrqZ.ttf", 24);
+        textColour = { 255, 255, 255 };
+        textMessage = "SCORE: " + to_string(GameScore);
+        surfaceMessage = TTF_RenderText_Solid(Sans, textMessage.c_str(), textColour);
+        Message = SDL_CreateTextureFromSurface(ImageRender.GetRenderer(), surfaceMessage);
+        cout << GameScore << endl;
+        SDL_FreeSurface(surfaceMessage);
     }
 }

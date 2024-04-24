@@ -20,11 +20,6 @@ void Collision::Init(GameEngine* _parent)
 	{
 		hitZonesY.push_back((parent->GWindow.GetWindow()->h / hitZoneDepth) * i);
 	}
-	for (int i = 0; i < hitZoneDepth; i++)
-	{
-		cout << hitZonesX[i] << endl;
-		cout << hitZonesY[i] << endl;
-	}
 }
 
 void Collision::CalculateHitZone(Character* thisChar)
