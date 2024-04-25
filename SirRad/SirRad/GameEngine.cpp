@@ -233,6 +233,7 @@ void GameEngine::UpdateContainers()
             enemyContainers[i]->Spawn();
         }
         enemyContainers[i]->ControlContained();
+        ////enemyContainers[i]->Animate DOTHIS!!!!!!
     }
 }
 
@@ -246,7 +247,6 @@ void GameEngine::RenderContainers()
 
 void GameEngine::DrawText()
 {
-    TTF_Init();
     SDL_RenderCopy(ImageRender.GetRenderer(), Message, NULL, &Message_rect);
     if (("SCORE: " + to_string(GameScore)) != (textMessage))
     {

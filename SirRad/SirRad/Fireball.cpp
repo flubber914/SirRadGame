@@ -1,7 +1,7 @@
 #include "Fireball.h"
 #include "GameEngine.h"
 
-Fireball::Fireball() : Enemy(size, position, &speed, "Images/Hi.png", 0)
+Fireball::Fireball() : Enemy(size, position, &speed, "Images/FireballSheet.png", 2)
 {
 	name = "Fireball";
 }
