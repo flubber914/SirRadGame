@@ -9,7 +9,7 @@ GameEngine::GameEngine(SDL_Window* window)
 {
     SoundPlayer.MusicLocationVector = { "Sounds/PUNK_SKATE_TO-KNIGHT_OK_PROD._PAYMAN_192BPM.mp3"};
     SoundPlayer.MusicVector.push_back(SoundPlayer.MixMusic(SoundPlayer.MusicLocationVector[0]));
-    Mix_PlayMusic(SoundPlayer.MusicVector[0], 0);
+    //Mix_PlayMusic(SoundPlayer.MusicVector[0], 0);
     GWindow = GameWindow(ImageRender.GetSurface());
     Collider.Init(this);
     //screenSurface = SDL_GetWindowSurface(window);
