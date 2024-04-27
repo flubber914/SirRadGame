@@ -36,6 +36,7 @@ public:
 	Collision Collider;
 	vector<Character*> allcharacters;
 	vector<EnemyContainer*> enemyContainers;
+	Character* Background;
 	float totalTime = 0;
 	void ChangeScore(int change);
 private:

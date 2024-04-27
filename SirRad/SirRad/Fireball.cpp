@@ -35,8 +35,27 @@ void Fireball::Spawn()
 	position[1] = (rand() % parent->GWindow.GetWindow()->h);
 	direction[0] = (((float)position[0] - (float)parent->SirRad.GetPosX()) / (float)parent->GWindow.GetWindow()->w);
 	direction[1] = (((float)position[1] - (float)parent->SirRad.GetPosY()) / (float)parent->GWindow.GetWindow()->h);
+	currentAnimation = 1;
+	currentFrame = 0;
 	isSpawned = true;
 	hit = false;
+}
+
+void Fireball::Animate()
+{
+	if ((parent->totalTime - lastFrame) > 100)
+	{
+		CurrentSpriteClip = (((currentAnimation - 1) * 4) + currentFrame);
+		currentFrame++;
+		if (currentFrame == 4) {
+			currentFrame = 0;
+			if (currentAnimation == 2)
+			{
+				Death();
+			}
+		}
+		lastFrame = parent->totalTime;
+	}
 }
 
 void Fireball::Attack()
@@ -61,7 +80,8 @@ void Fireball::Collide(Character* other)
 		{
 			cout << "Fireball Hit!" << endl;
 			parent->ChangeScore(-300);
-			Death();
+			currentAnimation = 2;
+			speed = 0;
 		}
 	}
 }

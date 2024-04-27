@@ -67,7 +67,7 @@ void Character::Animate()
 	{
 		CurrentSpriteClip = (((currentAnimation - 1) * 4) + currentFrame);
 		currentFrame++;
-		if (currentFrame == 5) {
+		if (currentFrame == 4) {
 			currentFrame = 0;
 		}
 		lastFrame = parent->totalTime;

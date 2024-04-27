@@ -2,7 +2,7 @@
 #include "GameEngine.h"
 #include "EnemyContainer.h"
 
-Axe::Axe() : Enemy(size, position, &speed, "Images/Hi.png", 0)
+Axe::Axe() : Enemy(size, position, &speed, "Images/AxeSheet.png", 1)
 {
 	name = "Axe";
 }

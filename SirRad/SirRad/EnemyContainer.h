@@ -14,6 +14,7 @@ public:
 	~EnemyContainer();
 	void ControlContained();
 	void RenderContained();
+	void AnimateContained();
 	void Spawn();
 	std::vector<Enemy*> GetContainedEnemy() { return containedEnemy; };
 	float GetSpawnWait() { return spawnWait; };

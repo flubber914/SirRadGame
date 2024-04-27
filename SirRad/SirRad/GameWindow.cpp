@@ -13,7 +13,7 @@ GameWindow::GameWindow(SDL_Surface* window)
 	Screen_EighthW = window->w / 8;
 	Screen_EighthH = window->h / 8;
 	Game_Floor = window->h - Screen_EighthH;
-	rampTop = Game_Floor - 105;
+	rampTop = Game_Floor - (window->h/3);
 }
 
 GameWindow::~GameWindow()

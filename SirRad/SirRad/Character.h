@@ -32,8 +32,6 @@ public:
 	virtual void ChangeDirection(int _direction);
 	bool GetSpawned() { return isSpawned; };
 
-
-
 	///FOR SPRITES
 	int spriteRows = 1;
 	int CurrentSpriteClip = 0;

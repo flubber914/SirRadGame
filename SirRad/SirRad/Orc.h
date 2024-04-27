@@ -14,6 +14,7 @@ public:
     void Death() override;
     void Spawn() override;
     void Collide(Character* other) override;
+    void ChangeDirection(int direction) override;
 private:
     void ThrowAxe();
     float lastThrown = 0;

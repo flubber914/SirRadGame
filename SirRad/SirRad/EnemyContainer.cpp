@@ -37,7 +37,17 @@ void EnemyContainer::RenderContained()
 	for (int i = 0; i < containedEnemy.size(); i++)
 	{
 		if (containedEnemy[i]->GetSpawned()) {
-			parent->ImageRender.DrawCharacter(containedEnemy[i]);
+			parent->ImageRender.DrawCharacter(containedEnemy[i], &containedEnemy[i]->SpriteClips[containedEnemy[i]->CurrentSpriteClip]);
+		}
+	}
+}
+
+void EnemyContainer::AnimateContained()
+{
+	for (int i = 0; i < containedEnemy.size(); i++)
+	{
+		if (containedEnemy[i]->GetSpawned()) {
+			containedEnemy[i]->Animate();
 		}
 	}
 }

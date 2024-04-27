@@ -15,9 +15,12 @@ GameEngine::GameEngine(SDL_Window* window)
     //screenSurface = SDL_GetWindowSurface(window);
     //ImageRender = ImageRenderer(window);
     int speed = 0;
-    int size[2] = { 64, 64 }; int pos[2] = { ImageRender.GetSurface()->w / 2,ImageRender.GetSurface()->h - (ImageRender.GetSurface()->h / 8)};
+    int size[2] = { GWindow.GetWindow()->w, GWindow.GetWindow()->h }; int pos[2] = {GWindow.GetWindow()->w / 2, GWindow.GetWindow()->h / 2};
+    Background = new SplashRectangle(size, pos, &speed);
+    Background->Init(this);
+    int size2[2] = { 64, 64 }; int pos2[2] = { ImageRender.GetSurface()->w / 2,ImageRender.GetSurface()->h - (ImageRender.GetSurface()->h / 8)};
     //////////////Create Main Character
-    SirRad = Player(size, pos, &speed, "Images/SirRadSheet.png");
+    SirRad = Player(size2, pos2, &speed, "Images/SirRadSheet.png");
     SirRad.Init(this);
     enemyContainers.push_back(new EnemyContainer(10, EnemyContainer::fireball, 5, 3, this));
     enemyContainers.push_back(new EnemyContainer(10, EnemyContainer::orc, 10, 10, this));
@@ -163,6 +166,7 @@ void GameEngine::Render()
     SDL_SetRenderDrawColor(ImageRender.GetRenderer(), 0, 0, 0, 255);
     SDL_RenderClear(ImageRender.GetRenderer());
     SDL_SetRenderDrawColor(ImageRender.GetRenderer(), 0, 0, 0, 0);
+    ImageRender.DrawCharacter(Background, 0);
     ImageRender.DrawCharacter(&SirRad, &SirRad.SpriteClips[SirRad.CurrentSpriteClip]);
     RenderContainers();
     DrawText();
@@ -233,7 +237,7 @@ void GameEngine::UpdateContainers()
             enemyContainers[i]->Spawn();
         }
         enemyContainers[i]->ControlContained();
-        ////enemyContainers[i]->Animate DOTHIS!!!!!!
+        enemyContainers[i]->AnimateContained();
     }
 }
 

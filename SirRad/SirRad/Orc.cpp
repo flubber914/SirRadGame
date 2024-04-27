@@ -4,7 +4,7 @@
 
 class EnemyContainer;
 
-Orc::Orc() : Enemy(size, position, &speed, "Images/Hi.png", 0)
+Orc::Orc() : Enemy(size, position, &speed, "Images/OrcSheet.png", 3)
 {
 	name = "Orc";
 }
@@ -22,6 +22,7 @@ bool Orc::Move()
 	}
 	else 
 	{
+		currentAnimation = 2;
 		ThrowAxe();
 	}
 	FindCollisionZone();
@@ -42,8 +43,9 @@ void Orc::Spawn()
 	int side = rand() % 2;
 	size[0] = 64;
 	size[1] = 64;
-	position[0] = (parent->GWindow.GetWindow()->w * side) - (size[0] * side);
+	position[0] = (parent->GWindow.GetWindow()->w * side) - (size[0] * side) + (size[0]/2);
 	position[1] = (parent->GWindow.GetWindow()->h);
+	ChangeDirection(0);
 	if (side == 0) 
 	{
 		direction[0] = 0.2f;
@@ -53,6 +55,8 @@ void Orc::Spawn()
 		direction[0] = -0.2f;
 	}
 	direction[1] = 1;
+	currentAnimation = 1;
+	currentFrame = 0;
 	isSpawned = true;
 }
 
@@ -62,6 +66,18 @@ void Orc::Collide(Character* other)
 	{
 		cout << "Orcy!" << endl;
 		Death();
+	}
+}
+
+void Orc::ChangeDirection(int direction)
+{
+	if (position[0] > parent->GWindow.GetMiddleW()) 
+	{
+		CharacterFlip = SDL_FLIP_NONE;
+	}
+	else 
+	{
+		CharacterFlip = SDL_FLIP_HORIZONTAL;
 	}
 }
 

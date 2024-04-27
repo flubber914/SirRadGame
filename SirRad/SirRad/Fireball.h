@@ -13,6 +13,7 @@ public:
     void Attack() override;
     void Damage() override;
     void Collide(Character* other) override;
+    void Animate() override;
     bool hit = false;
 private:
 };

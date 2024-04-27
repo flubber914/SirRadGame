@@ -11,6 +11,7 @@ public:
     bool Move() override;
     void SetPosition(int _position[2]);
     void SetSize(int _size[2]);
+    string name = "box";
 private:
 };
 #endif // !SPLASHRECTANGLE_H
