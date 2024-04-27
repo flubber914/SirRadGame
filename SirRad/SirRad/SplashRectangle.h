@@ -1,6 +1,8 @@
 #ifndef SPLASHRECTANGLE_H
 #define SPLASHRECTANGLE_H
 #include "Character.h"
+class GameEngine;
+
 class SplashRectangle :
     public Character
 {

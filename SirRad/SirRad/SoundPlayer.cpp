@@ -1,22 +1,27 @@
 #include "SoundPlayer.h"
 #include "GameEngine.h"
 
-SoundPlayer::SoundPlayer() 
+SoundPlayer::SoundPlayer(GameEngine* _parent) 
 {
+    parent = _parent;
+    parent->PrintLog("Sound Player Created");
 	Init();
 }
 
 SoundPlayer::~SoundPlayer()
 {
+    parent->PrintLog("Sound Player Unloaded");
 }
 
 Mix_Music* SoundPlayer::MixMusic(std::string location)
 {
     bool success = true;
+    string error;
     Mix_Music* loadSound = Mix_LoadMUS(location.c_str());
     if (loadSound == NULL)
     {
-        printf("Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError());
+        error = Mix_GetError();
+        parent->PrintLog("Failed to load beat music! SDL_mixer Error: " + error);
         success = false;
     }
     return loadSound;
@@ -25,9 +30,11 @@ Mix_Music* SoundPlayer::MixMusic(std::string location)
 void SoundPlayer::Init()
 {
 	bool success = true;
+    string error;
     if (SDL_Init(SDL_INIT_AUDIO) < 0)
     {
-        printf("SDL could not initialize SoundPlayer! SDL Error: %s\n", SDL_GetError());
+        error = SDL_GetError();
+        parent->PrintLog("SDL could not initialize SoundPlayer! SDL Error: " + error);
         success = false;
     }
     else
@@ -35,9 +42,11 @@ void SoundPlayer::Init()
         //Initialize SDL_mixer
         if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
         {
-            printf("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
+            error = Mix_GetError();
+            parent->PrintLog("SDL_mixer could not initialize! SDL_mixer Error: " + error);
             success = false;
         }
     }
+    parent->PrintLog("Sound player initialisation was successful: " + to_string(success));
 }
 //reference https://lazyfoo.net/tutorials/SDL/21_sound_effects_and_music/index.php#:~:text=To%20initialize%20SDL_mixer%20we%20need,we're%20using%20the%20default.

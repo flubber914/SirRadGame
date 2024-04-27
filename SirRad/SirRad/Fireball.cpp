@@ -8,6 +8,7 @@ Fireball::Fireball() : Enemy(size, position, &speed, "Images/FireballSheet.png",
 
 Fireball::~Fireball()
 {
+	parent->PrintLog("Fireball Destroyed");
 }
 
 bool Fireball::Move()
@@ -33,12 +34,13 @@ void Fireball::Spawn()
 	size[1] = 32;
 	position[0] = (parent->GWindow.GetWindow()->w * side) - (size[0] * side);
 	position[1] = (rand() % parent->GWindow.GetWindow()->h);
-	direction[0] = (((float)position[0] - (float)parent->SirRad.GetPosX()) / (float)parent->GWindow.GetWindow()->w);
-	direction[1] = (((float)position[1] - (float)parent->SirRad.GetPosY()) / (float)parent->GWindow.GetWindow()->h);
+	direction[0] = (((float)position[0] - (float)parent->SirRad->GetPosX()) / (float)parent->GWindow.GetWindow()->w);
+	direction[1] = (((float)position[1] - (float)parent->SirRad->GetPosY()) / (float)parent->GWindow.GetWindow()->h);
 	currentAnimation = 1;
 	currentFrame = 0;
 	isSpawned = true;
 	hit = false;
+	parent->PrintLog("Fireball Spawned");
 }
 
 void Fireball::Animate()
@@ -68,17 +70,16 @@ void Fireball::Damage()
 
 void Fireball::Collide(Character* other)
 {
-	cout << other->name << endl;
 	if (other->name == "SirRad" && !hit) {
 		hit = true;
-		if (parent->SirRad.performingTrick)
+		if (parent->SirRad->performingTrick)
 		{
-			cout << "dodged with trick" << endl;
+			parent->PrintLog("dodged with trick");
 			parent->ChangeScore(500);
 		}
 		else
 		{
-			cout << "Fireball Hit!" << endl;
+			parent->PrintLog("Fireball Hit!");
 			parent->ChangeScore(-300);
 			currentAnimation = 2;
 			speed = 0;

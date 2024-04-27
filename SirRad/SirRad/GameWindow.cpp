@@ -5,8 +5,10 @@ GameWindow::GameWindow()
 {
 }
 
-GameWindow::GameWindow(SDL_Surface* window)
+GameWindow::GameWindow(SDL_Surface* window, GameEngine* _parent)
 {
+	parent = _parent;
+	parent->PrintLog("Window stats calculated for functions");
 	gWindow = window;
 	Screen_MiddleW = window->w / 2;
 	Screen_MiddleH = window->h / 2;
@@ -18,4 +20,5 @@ GameWindow::GameWindow(SDL_Surface* window)
 
 GameWindow::~GameWindow()
 {
+	parent->PrintLog("GameWindow Unloaded");
 }

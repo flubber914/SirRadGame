@@ -6,10 +6,12 @@
 #include <SDL_mixer.h>
 #include <SDL_audio.h>
 #include <vector>
+
+class GameEngine;
 class SoundPlayer
 {
 public:
-	SoundPlayer();
+	SoundPlayer(GameEngine* _parent);
 	~SoundPlayer();
 	Mix_Music* MixMusic(std::string location);
 	std::vector<Mix_Music*> MusicVector = {};
@@ -17,6 +19,7 @@ public:
 
 private:
 	void Init();
+	GameEngine* parent;
 };
 #endif
 

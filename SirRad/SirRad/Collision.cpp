@@ -7,11 +7,13 @@ Collision::Collision()
 
 Collision::~Collision()
 {
+	parent->PrintLog("Character Unloaded");
 }
 
 void Collision::Init(GameEngine* _parent)
 {
 	parent = _parent;
+	parent->PrintLog("Collision initiated");
 	for (int i = 0; i < hitZoneDepth; i++)
 	{
 		hitZonesX.push_back((parent->GWindow.GetWindow()->w / hitZoneDepth) * i);

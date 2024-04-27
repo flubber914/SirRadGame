@@ -18,7 +18,7 @@ public:
 private:
     void ThrowAxe();
     float lastThrown = 0;
-    float throwSpeed = 2000;
+    float throwSpeed = 1800;
     EnemyContainer* AxeContainer;
 };
 #endif

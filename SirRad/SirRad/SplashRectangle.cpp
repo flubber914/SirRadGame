@@ -1,4 +1,6 @@
 #include "SplashRectangle.h"
+#include "GameEngine.h"
+#include <iostream>
 
 SplashRectangle::SplashRectangle()
 {
@@ -10,6 +12,7 @@ SplashRectangle::SplashRectangle(int _size[2], int _position[2], int* _speed) : 
 
 SplashRectangle::~SplashRectangle()
 {
+	parent->PrintLog("rectangle Unloaded");
 }
 
 bool SplashRectangle::Move()

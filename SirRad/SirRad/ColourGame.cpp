@@ -69,7 +69,6 @@ bool ColourGame::NextColour()
 
 void ColourGame::SetColour(colour colour)
 {
-	std::cout << colour << std::endl;
 	switch (colour)
 	{
 	case ColourGame::Red:
@@ -91,7 +90,6 @@ void ColourGame::SetColour(colour colour)
 		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 		break;
 	case ColourGame::Count:
-		std::cout << "wu oh" << std::endl;
 		break;
 	default:
 		break;

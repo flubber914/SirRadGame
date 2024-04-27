@@ -8,6 +8,7 @@ Enemy::Enemy(int _size[2], int _position[2], int* _speed, string _ImagePath, int
 
 Enemy::~Enemy()
 {
+	parent->PrintLog("Enemy Unloaded");
 }
 
 void Enemy::Death()

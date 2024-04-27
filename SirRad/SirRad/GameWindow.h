@@ -2,11 +2,13 @@
 #define GAMEWINDOW_H
 #include "SDL.h"
 #include <string>
+class GameEngine;
+
 class GameWindow
 {
 public:
 	GameWindow();
-	GameWindow(SDL_Surface* window);
+	GameWindow(SDL_Surface* window, GameEngine* parent);
 	~GameWindow();
 	SDL_Surface* GetWindow() { return gWindow; };
 	int GetMiddleW() { return Screen_MiddleW; };
@@ -23,5 +25,6 @@ private:
 	int Screen_EighthH;
 	int Game_Floor;
 	int rampTop;
+	GameEngine* parent;
 };
 #endif

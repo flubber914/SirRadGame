@@ -7,7 +7,7 @@
 class ImageRenderer
 {
 public:
-	ImageRenderer(SDL_Window* window);
+	ImageRenderer(SDL_Window* window, GameEngine* _parent);
 	~ImageRenderer();
 	bool Init();
 	SDL_Surface* GetSurface() { return gScreenSurface; };
@@ -19,6 +19,7 @@ private:
 	SDL_Renderer* renderer;
 	SDL_Window* gWindow;
 	SDL_Surface* gScreenSurface;
+	GameEngine* parent;
 };
 #endif
 //reference https://lazyfoo.net/tutorials/SDL/11_clip_rendering_and_sprite_sheets/index.php

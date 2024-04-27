@@ -11,11 +11,12 @@ Orc::Orc() : Enemy(size, position, &speed, "Images/OrcSheet.png", 3)
 
 Orc::~Orc()
 {
+	parent->PrintLog("Orc destroyed");
 }
 
 bool Orc::Move()
 {
-	if (position[1] > parent->GWindow.GetRampTop()) 
+	if (position[1] > parent->GWindow.GetRampTop() - parent->GWindow.GetEighthH()) 
 	{
 		position[0] -= speed * direction[0];
 		position[1] -= speed * direction[1];
@@ -43,28 +44,30 @@ void Orc::Spawn()
 	int side = rand() % 2;
 	size[0] = 64;
 	size[1] = 64;
-	position[0] = (parent->GWindow.GetWindow()->w * side) - (size[0] * side) + (size[0]/2);
+	//position[0] = (parent->GWindow.GetWindow()->w * side) + (parent->GWindow.GetEighthW());
 	position[1] = (parent->GWindow.GetWindow()->h);
-	ChangeDirection(0);
 	if (side == 0) 
 	{
-		direction[0] = 0.2f;
+		position[0] = (parent->GWindow.GetWindow()->w * side) + (parent->GWindow.GetEighthW() * 0.9);
+		direction[0] = 0;
 	}
 	else 
 	{
-		direction[0] = -0.2f;
+		position[0] = (parent->GWindow.GetWindow()->w * side) - (parent->GWindow.GetEighthW() * 0.9);
+		direction[0] = 0;
 	}
+	ChangeDirection(0);
 	direction[1] = 1;
 	currentAnimation = 1;
 	currentFrame = 0;
 	isSpawned = true;
+	parent->PrintLog("Orc Spawned");
 }
 
 void Orc::Collide(Character* other)
 {
 	if (other->name == "SirRad")
 	{
-		cout << "Orcy!" << endl;
 		Death();
 	}
 }
@@ -85,7 +88,6 @@ void Orc::ThrowAxe()
 {
 	if (parent->totalTime - lastThrown > throwSpeed) 
 	{
-		cout << "throw" << endl;
 		throwing = true;
 		lastThrown = parent->totalTime;
 		AxeContainer->Spawn();

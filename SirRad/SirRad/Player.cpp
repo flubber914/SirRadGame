@@ -17,6 +17,7 @@ Player::Player(int _size[2], int _position[2], int* _speed, string _ImagePath) :
 
 Player::~Player()
 {
+	parent->PrintLog("SirRad Is Gone! (unloaded)");
 }
 /// <summary>
 /// The player moves from left to right taking into account it's x value to determine it's direction and rotation
@@ -124,7 +125,6 @@ void Player::ChangeMoveZone(int newZone)
 
 void Player::Collide(Character* other)
 {
-	cout << "weeee" << endl;
 }
 
 void Player::SetRotation()

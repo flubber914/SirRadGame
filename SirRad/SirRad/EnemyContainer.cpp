@@ -7,6 +7,7 @@
 EnemyContainer::EnemyContainer(int _count, EnemyTypes enemyType, float _spawnDelay, float _spawnWait, GameEngine* _parent)
 {
 	parent = _parent;
+	parent->PrintLog("Enemy Container created");
 	parent->enemyContainers.push_back(this);
 	CreateEnemies(_count, enemyType);
 	spawnDelay = _spawnDelay * 1000;
@@ -18,8 +19,9 @@ EnemyContainer::~EnemyContainer()
 	int length = containedEnemy.size();
 	for (int i = 0; i < length; i++)
 	{
-		delete containedEnemy[0];
+		delete containedEnemy[i];
 	}
+	parent->PrintLog("EnemyContainer Unloaded");
 }
 
 void EnemyContainer::ControlContained()
@@ -85,10 +87,12 @@ void EnemyContainer::CreateEnemies(int _count, EnemyTypes enemyType)
 			newEnemy = new Axe();
 			break;
 		default:
-			cout << "ERROR: not an enemy type" << endl;
+			parent->PrintLog("ERROR: not an enemy type");
 			break;
 		}
 		newEnemy->Init(parent);
+
 		containedEnemy.push_back(newEnemy);
+		parent->PrintLog(newEnemy->name + " is " + to_string(containedEnemy.size()) + " in container");
 	}
 }

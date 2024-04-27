@@ -15,6 +15,7 @@ GameOfLife::GameOfLife(int width, int height, SDL_Renderer* _renderer)
 
 GameOfLife::~GameOfLife()
 {
+	cout << "GameOfLife IsOver!" << endl;
 }
 
 GameOfLife& GameOfLife::Create(int width, int height, SDL_Renderer* _renderer)
@@ -27,7 +28,6 @@ void GameOfLife::ScreenClick(int x, int y)
 	if (x < screenHeight && y < screenHeight)
 	{
 		grid[y / (screenHeight / Ysize)][x / (screenHeight / Xsize)] = true;
-		printf("eh?");
 	}
 }
 

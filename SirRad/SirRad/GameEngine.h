@@ -32,13 +32,16 @@ public:
 	GameWindow GWindow;
 	ImageRenderer ImageRender;
 	SoundPlayer SoundPlayer;
-	Player SirRad;
+	Player* SirRad;
 	Collision Collider;
 	vector<Character*> allcharacters;
 	vector<EnemyContainer*> enemyContainers;
 	Character* Background;
 	float totalTime = 0;
 	void ChangeScore(int change);
+	//logging
+	void PrintLog(string text);
+	bool isLogging = true;
 private:
 	SZ_Timer aTimer;
 	bool quit = false;
@@ -76,6 +79,7 @@ private:
 	SDL_Texture* Message;
 	SDL_Rect Message_rect;
 	// font from https://www.fontspace.com/category/open-source?p=2
+
 };
 #endif
 

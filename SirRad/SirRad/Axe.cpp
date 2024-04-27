@@ -9,6 +9,7 @@ Axe::Axe() : Enemy(size, position, &speed, "Images/AxeSheet.png", 1)
 
 Axe::~Axe()
 {
+	parent->PrintLog("Axe Destroyed");
 }
 
 bool Axe::Move()
@@ -24,7 +25,6 @@ bool Axe::Move()
 
 void Axe::Death()
 {
-	cout << "aaaaah! I'm an axe" << endl;
 	isSpawned = false;
 }
 
@@ -40,7 +40,7 @@ void Axe::Spawn()
 			size[1] = 32;
 			position[0] = OrcContainer->GetContainedEnemy()[i]->GetPosX();
 			position[1] = OrcContainer->GetContainedEnemy()[i]->GetPosY();
-			if (OrcContainer->GetContainedEnemy()[i]->GetDirection()[0] > 0)
+			if (OrcContainer->GetContainedEnemy()[i]->GetPosX() < parent->GWindow.GetMiddleW())
 			{
 				direction[0] = -1;
 			}
@@ -51,6 +51,7 @@ void Axe::Spawn()
 			direction[1] = 3;
 			axeHit = false;
 			isSpawned = true;
+			parent->PrintLog("Axe Spawned");
 			break;
 		}
 	}
@@ -63,14 +64,14 @@ void Axe::Collide(Character* other)
 		if (other->name == "SirRad")
 		{
 			axeHit = true;
-			if (parent->SirRad.performingTrick) 
+			if (parent->SirRad->performingTrick) 
 			{
-				cout << "dodged with trick" << endl;
+				parent->PrintLog("dodged with trick");
 				parent->ChangeScore(500);
 			}
 			else 
 			{
-				cout << "Axe Hit!" << endl;
+				parent->PrintLog("Axe Hit!");
 				parent->ChangeScore(-300);
 				Death();
 			}

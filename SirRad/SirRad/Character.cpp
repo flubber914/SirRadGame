@@ -25,6 +25,7 @@ Character::Character(int _size [2], int _position [2], int* _speed, string _Imag
 /// </summary>
 Character::~Character()
 {
+	parent->PrintLog("Character Destroyed");
 }
 /// <summary>
 /// This virual Function is the basis of all movement of all characters in the game
@@ -47,6 +48,7 @@ void Character::FindCollisionZone()
 void Character::Init(GameEngine* _parent)
 {
 	parent = _parent;
+	parent->PrintLog(name + "initiated");
 	if (ImagePath != "None") {
 		//Uint32 colorkey = SDL_MapRGB(character_Surface->format, 0, 0, 0xff);
 		//SDL_SetColorKey(character_Surface, SDL_TRUE, colorkey);
@@ -100,6 +102,7 @@ void Character::LoadSprites()
 	}
 	else 
 	{
-		cout << "ERROR: no texture for spritesheet creation" << endl;
+		parent->PrintLog("ERROR: no texture for spritesheet creation");
 	}
+	parent->PrintLog("sprites for " + ImagePath + " loaded");
 }
