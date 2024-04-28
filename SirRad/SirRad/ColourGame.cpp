@@ -11,13 +11,13 @@ ColourGame::ColourGame(SDL_Renderer* _renderer)
 	renderer = _renderer;
 	int speed = 0;
 	int size[2] = { (100), 100 }; int pos[2] = { 100, 100 };
-	rect = *(new SplashRectangle(size, pos, &speed));
+	rect = *(new SplashRectangle(size, pos, &speed, "None"));
 	size[0] = 450; size[1] = 30;
 	pos[0] = 0; pos[1] = 0;
-	bar = *(new SplashRectangle(size, pos, &speed));
+	bar = *(new SplashRectangle(size, pos, &speed, "None"));
 	size[0] = 0; size[1] = 30;
 	pos[0] = 0; pos[1] = 0;
-	barFil = *(new SplashRectangle(size, pos, &speed));
+	barFil = *(new SplashRectangle(size, pos, &speed, "None"));
 	StartGame();
 }
 

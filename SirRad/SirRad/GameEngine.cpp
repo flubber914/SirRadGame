@@ -11,14 +11,14 @@ GameEngine::GameEngine(SDL_Window* window)
 {
     SoundPlayer.MusicLocationVector = { "Sounds/PUNK_SKATE_TO-KNIGHT_OK_PROD._PAYMAN_192BPM.mp3"};
     SoundPlayer.MusicVector.push_back(SoundPlayer.MixMusic(SoundPlayer.MusicLocationVector[0]));
-    //Mix_PlayMusic(SoundPlayer.MusicVector[0], 0);
+    Mix_PlayMusic(SoundPlayer.MusicVector[0], 0);
     GWindow = GameWindow(ImageRender.GetSurface(), this);
     Collider.Init(this);
     //screenSurface = SDL_GetWindowSurface(window);
     //ImageRender = ImageRenderer(window);
     int speed = 0;
     int size[2] = { GWindow.GetWindow()->w, GWindow.GetWindow()->h }; int pos[2] = {GWindow.GetWindow()->w / 2, GWindow.GetWindow()->h / 2};
-    Background = new SplashRectangle(size, pos, &speed);
+    Background = new SplashRectangle(size, pos, &speed, "Images/Background.png");
     Background->Init(this);
     int size2[2] = { 64, 64 }; int pos2[2] = { ImageRender.GetSurface()->w / 2,ImageRender.GetSurface()->h - (ImageRender.GetSurface()->h / 8)};
     //////////////Create Main Character
@@ -37,6 +37,9 @@ GameEngine::GameEngine(SDL_Window* window)
     ////Initialise the game image renderer
     //////////////
     PrintLog("splash screen is running");
+    splashLife = new GameOfLife(100, 100, ImageRender.GetRenderer(), this);
+    &splashLife->Create(100,100, ImageRender.GetRenderer(), this);
+
     Splash(); //do the splash screen at the start of the game
     //GameOfLife newLife;
     //Life = &newLife.Create(screenSurface->w, screenSurface->h, renderer);
@@ -220,57 +223,75 @@ void GameEngine::Render()
 
 void GameEngine::Splash()
 {
-    aTimer.resetTicksTimer();
-    float xpos = 0 - (ImageRender.GetSurface()->w*5);
-    float ypos = 0;
-    int rectangles = 6;
-    bool right = true;
-    float screenWidth = ImageRender.GetSurface()->w;
-    float screenHeight = ImageRender.GetSurface()->h;
-    list<SplashRectangle> splashArray;
-    for (size_t i = 0; i < rectangles; i++)
+    while (!quit)
     {
-        ////////////////////////Setup Splash Square stats
-        int speed = (screenWidth) / (splashFrames/(ImageRender.GetSurface()->w/ (screenWidth /8)));
-        int size[2] = { (screenWidth *5), (ceil(screenHeight / rectangles)) }; int pos[2] = { xpos, ypos };
-        ypos += ceil(screenHeight / rectangles);
-        xpos -= ceil(screenWidth / rectangles);
-        //////////////Create Starting Objects
-        SplashRectangle* newRectangle = new SplashRectangle(size, pos, &speed);
-        newRectangle->Init(this);
-        splashArray.push_back(*newRectangle);
-        //////////////
+        aTimer.resetTicksTimer();
+        SplashUpdate();
+        SplashRender();
+        SDL_Delay(16.667 - aTimer.getTicks());
+        totalTime += 16.667;
+        if (totalTime > 5000) {
+            quit = true;
+        }
     }
-    //////////////////////////////loop each frame drawing all splash cubes
-    for (size_t i = 0; i < 4; i++)
+    delete splashLife;
+    PrintLog("Splash deleted");
+    quit = false;
+}
+
+void GameEngine::SplashUpdate()
+{
+    if (count == 8)
     {
-        for (size_t o = 0; o < splashFrames/4; o++)
+        splashLife->ChangeLife();
+        count = 0;
+    }
+    else {
+        count++;
+    }
+    while (SDL_PollEvent(&event) != 0)
+    {
+        switch (event.type)
         {
-            SDL_SetRenderDrawColor(ImageRender.GetRenderer(), 250, 158, 2, 255);
-            SDL_RenderClear(ImageRender.GetRenderer());
-            SDL_SetRenderDrawColor(ImageRender.GetRenderer(), 251, 188, 79, 255);
-            list<SplashRectangle>::iterator it;
-            for (it = splashArray.begin(); it != splashArray.end(); ++it)
+        case SDL_QUIT:
+            SDL_Quit();
+            quit = true;
+            break;
+        case SDL_MOUSEBUTTONDOWN:
+            if (event.button.button == (SDL_BUTTON_LEFT))
             {
-                it->Move();
-                ImageRender.DrawCharacter(&(*it));
+                leftMousePressed = true;
             }
-            SDL_Delay(floor((5000 / splashFrames) - aTimer.getTicks()));
-            totalTime += 16.667;
-            aTimer.resetTicksTimer();
-            SDL_RenderPresent(ImageRender.GetRenderer());
+            break;
+        case SDL_MOUSEBUTTONUP:
+            if (event.button.button == (SDL_BUTTON_LEFT))
+            {
+                leftMousePressed = false;
+            }
+            break;
+        default:
+            //printf("event polled");
+            break;
         }
-        /////////////////////////////Swap cube positions
-        //int tempX = 
-        list<SplashRectangle>::iterator it;
-        for (it = splashArray.begin(); it != splashArray.end(); ++it)
-        {
-            int newPos[2] = { it->GetPosX(), (it->GetSizeH()*rectangles) - it->GetPosY() - it->GetSizeH() };
-            it->SetPosition(newPos);
-        }
-        right = !right;
     }
-    //////////////////////
+    if (leftMousePressed)
+    {
+        int x, y;
+        SDL_GetMouseState(&x, &y);
+        splashLife->ScreenClick(x, y);
+    }
+}
+
+void GameEngine::SplashRender()
+{
+    /////////////////////////draw background
+    SDL_SetRenderDrawColor(ImageRender.GetRenderer(), 0, 0, 0, 255);
+    SDL_RenderClear(ImageRender.GetRenderer());
+    ///////////////////////// 
+    SDL_SetRenderDrawColor(ImageRender.GetRenderer(), 255, 0, 255, 255);
+    splashLife->DrawLife();
+    //DrawCharacter(&SirRad);///////////DrawPlayer
+    SDL_RenderPresent(ImageRender.GetRenderer());
 }
 
 void GameEngine::UpdateContainers()

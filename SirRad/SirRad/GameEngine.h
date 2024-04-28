@@ -33,6 +33,7 @@ public:
 	ImageRenderer ImageRender;
 	SoundPlayer SoundPlayer;
 	Player* SirRad;
+	GameOfLife* splashLife;
 	Collision Collider;
 	vector<Character*> allcharacters;
 	vector<EnemyContainer*> enemyContainers;
@@ -65,6 +66,8 @@ private:
 	//splash screen
 	int splashFrames = 300;
 	void Splash();
+	void SplashUpdate();
+	void SplashRender();
 
 	//enemies
 	void UpdateContainers();

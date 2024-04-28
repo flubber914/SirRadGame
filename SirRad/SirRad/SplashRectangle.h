@@ -8,7 +8,7 @@ class SplashRectangle :
 {
 public:
     SplashRectangle();
-    SplashRectangle(int _size[2], int _position[2], int* _speed);
+    SplashRectangle(int _size[2], int _position[2], int* _speed, string ImagePath);
     ~SplashRectangle();
     bool Move() override;
     void SetPosition(int _position[2]);

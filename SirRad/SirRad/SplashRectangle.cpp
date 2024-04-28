@@ -6,7 +6,7 @@ SplashRectangle::SplashRectangle()
 {
 }
 
-SplashRectangle::SplashRectangle(int _size[2], int _position[2], int* _speed) : Character(_size, _position, _speed, "Images/Background.png", 0)
+SplashRectangle::SplashRectangle(int _size[2], int _position[2], int* _speed, string imagePath) : Character(_size, _position, _speed, imagePath, 0)
 {
 }
 

@@ -1,33 +1,41 @@
 #include "GameOfLife.h"
+#include "GameEngine.h"
 
-GameOfLife::GameOfLife()
+GameOfLife::GameOfLife(GameEngine* _parent)
 {
+	parent = _parent;
 	CreateLife();
 }
 
-GameOfLife::GameOfLife(int width, int height, SDL_Renderer* _renderer)
+GameOfLife::GameOfLife(int width, int height, SDL_Renderer* _renderer, GameEngine* _parent)
 {
+	parent = _parent;
 	//CreateLife();
-	screenHeight = height;
-	screenWidth = width;
+	screenHeight = parent->GWindow.GetWindow()->h;
+	screenWidth = parent->GWindow.GetWindow()->w;
 	renderer = _renderer;
+	int speed = 0;
+	int size[2] = { (screenWidth / Xsize), (screenHeight / Ysize) }; int pos[2] = { 0, 0 };
+	LifeSquare = new SplashRectangle(size, pos, &speed, "None");
+	LifeSquare->Init(parent);
 }
 
 GameOfLife::~GameOfLife()
 {
-	cout << "GameOfLife IsOver!" << endl;
+	cout << "GameOfLife Is Over!" << endl;
+	delete LifeSquare;
 }
 
-GameOfLife& GameOfLife::Create(int width, int height, SDL_Renderer* _renderer)
+GameOfLife& GameOfLife::Create(int width, int height, SDL_Renderer* _renderer, GameEngine* _parent)
 {
-	return *(new GameOfLife(width, height, _renderer));
+	return *(new GameOfLife(width, height, _renderer, _parent));
 }
 
 void GameOfLife::ScreenClick(int x, int y)
 {
 	if (x < screenHeight && y < screenHeight)
 	{
-		grid[y / (screenHeight / Ysize)][x / (screenHeight / Xsize)] = true;
+		grid[y / (screenHeight / Ysize)][x / (screenWidth / Xsize)] = true;
 	}
 }
 
@@ -45,16 +53,13 @@ void GameOfLife::CreateLife()
 
 void GameOfLife::DrawLife()
 {
-	int speed = 0;
-	int size[2] = { (screenHeight / Xsize), (screenHeight / Ysize) }; int pos[2] = { 0, 0 };
-	SplashRectangle* LifeSquare = new SplashRectangle(size, pos, &speed);
 	for (int i = 0; i < Ysize; i++)
 	{
 		for (int o = 0; o < Xsize; o++)
 		{
 			if (grid[i][o])
 			{
-				int newPos[2] = { o * size[0] , i * size[1] };
+				int newPos[2] = { o * LifeSquare->GetSizeW() , i * LifeSquare->GetSizeH() };
 				LifeSquare->SetPosition(newPos);
 				DrawCharacter(LifeSquare);
 			}
