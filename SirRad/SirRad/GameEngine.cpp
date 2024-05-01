@@ -19,7 +19,7 @@ GameEngine::GameEngine(SDL_Window* window)
     PrintLog("splash screen is running");
     splashLife = new GameOfLife(100, 100, ImageRender.GetRenderer(), this);
     &splashLife->Create(100,100, ImageRender.GetRenderer(), this);
-
+    SDL_RenderSetLogicalSize(ImageRender.GetRenderer(), 800, 450);
     Splash();
 
     int speed = 0;
@@ -27,10 +27,9 @@ GameEngine::GameEngine(SDL_Window* window)
     Background = new SplashRectangle(size, pos, &speed, "Images/Background.png");
     Background->Init(this);
 
-    SDL_RenderSetLogicalSize(ImageRender.GetRenderer(), 800, 450);
     int size2[2] = { 64, 64 }; int pos2[2] = { ImageRender.GetSurface()->w / 2,ImageRender.GetSurface()->h - (ImageRender.GetSurface()->h / 8) };
     //////////////Create Main Character
-    SirRad = new Player(size2, pos2, &speed, "Images/SirRadSheet.png");
+     SirRad = new Player(size2, pos2, &speed, "Images/SirRadSheet.png");
     SirRad->Init(this);
     enemyContainers.push_back(new EnemyContainer(10, EnemyContainer::fireball, 21.5, 1.25, this));
     enemyContainers.push_back(new EnemyContainer(10, EnemyContainer::orc, 30, 5, this));
@@ -269,6 +268,7 @@ void GameEngine::SplashUpdate()
             SDL_Quit();
             quit = true;
             break;
+
         case SDL_MOUSEBUTTONDOWN:
             if (event.button.button == (SDL_BUTTON_LEFT))
             {
@@ -281,18 +281,23 @@ void GameEngine::SplashUpdate()
                 leftMousePressed = false;
             }
             break;
-        case SDLK_l:
-            PrintLog("is still logging: " + to_string(!isLogging));
-            isLogging = !isLogging;
-            break;
-        case SDLK_p:
-            if (isFullscreen) {
-                SDL_SetWindowFullscreen(GWindow.GetScreen(), 0);
-                isFullscreen = false;
-            }
-            else {
-                SDL_SetWindowFullscreen(GWindow.GetScreen(), SDL_WINDOW_FULLSCREEN_DESKTOP);
-                isFullscreen = true;
+        case SDL_KEYDOWN:
+            switch (event.key.keysym.sym)
+            {
+            case SDLK_l:
+                PrintLog("is still logging: " + to_string(!isLogging));
+                isLogging = !isLogging;
+                break;
+            case SDLK_p:
+                if (isFullscreen) {
+                    SDL_SetWindowFullscreen(GWindow.GetScreen(), 0);
+                    isFullscreen = false;
+                }
+                else {
+                    SDL_SetWindowFullscreen(GWindow.GetScreen(), SDL_WINDOW_FULLSCREEN_DESKTOP);
+                    isFullscreen = true;
+                }
+                break;
             }
             break;
         default:

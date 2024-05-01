@@ -60,10 +60,10 @@ void Collision::CheckCollision(Character* thisChar)
 			{
 				if (parent->allcharacters[i] != thisChar)
 				{
-					ListLXBound = parent->allcharacters[i]->GetPosX();
-					ListRXBound = parent->allcharacters[i]->GetPosX() + parent->allcharacters[i]->GetSizeW();
-					ListTYBound = parent->allcharacters[i]->GetPosY();
-					ListBYBound = parent->allcharacters[i]->GetPosY() + parent->allcharacters[i]->GetSizeH();
+					ListLXBound = parent->allcharacters[i]->GetPosX() - parent->allcharacters[i]->GetSizeW() / 2;
+					ListRXBound = parent->allcharacters[i]->GetPosX() + parent->allcharacters[i]->GetSizeW() / 2;
+					ListTYBound = parent->allcharacters[i]->GetPosY() - parent->allcharacters[i]->GetSizeH() / 2;
+					ListBYBound = parent->allcharacters[i]->GetPosY() + parent->allcharacters[i]->GetSizeH()/2;
 					if ((ThisRXBound > ListLXBound) && (ThisLXBound < ListRXBound))
 					{
 						if ((ThisTYBound < ListBYBound) && (ThisBYBound > ListTYBound))
