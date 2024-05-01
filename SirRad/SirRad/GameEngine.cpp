@@ -10,22 +10,22 @@ GameEngine::GameEngine(SDL_Window* window)
     aTimer(this)
 {
     SDL_SetRelativeMouseMode(SDL_TRUE);
-    SoundPlayer.MusicLocationVector = { "Sounds/SirRadSong.mp3"};
+    SoundPlayer.MusicLocationVector = { "Sounds/SirRadSong.ogg"};
     SoundPlayer.MusicVector.push_back(SoundPlayer.MixMusic(SoundPlayer.MusicLocationVector[0]));
     Mix_PlayMusic(SoundPlayer.MusicVector[0], 0);
     GWindow = GameWindow(ImageRender.GetSurface(), this, window);
     Collider.Init(this);
-
-    int speed = 0;
-    int size[2] = { GWindow.GetWindow()->w, GWindow.GetWindow()->h }; int pos[2] = {GWindow.GetWindow()->w / 2, GWindow.GetWindow()->h / 2};
-    Background = new SplashRectangle(size, pos, &speed, "Images/Background.png");
-    Background->Init(this);
 
     PrintLog("splash screen is running");
     splashLife = new GameOfLife(100, 100, ImageRender.GetRenderer(), this);
     &splashLife->Create(100,100, ImageRender.GetRenderer(), this);
 
     Splash();
+
+    int speed = 0;
+    int size[2] = { GWindow.GetWindow()->w, GWindow.GetWindow()->h }; int pos[2] = { GWindow.GetWindow()->w / 2, GWindow.GetWindow()->h / 2 };
+    Background = new SplashRectangle(size, pos, &speed, "Images/Background.png");
+    Background->Init(this);
 
     SDL_RenderSetLogicalSize(ImageRender.GetRenderer(), 800, 450);
     int size2[2] = { 64, 64 }; int pos2[2] = { ImageRender.GetSurface()->w / 2,ImageRender.GetSurface()->h - (ImageRender.GetSurface()->h / 8) };
@@ -230,9 +230,19 @@ void GameEngine::Splash()
         aTimer.resetTicksTimer();
         SplashUpdate();
         SplashRender();
-        SDL_Delay(16.667 - aTimer.getTicks());
         totalTime += 16.667;
+        if (16.667 - aTimer.getTicks() < 0)
+        {
+            PrintLog("FrameRate: " + to_string(aTimer.getTicks()));
+        }
+        else
+        {
+            PrintLog("FrameRate: 16.667"); //print 16.667 if get ticks is less than 16.667 since delay sets the framerate to this valued
+            SDL_Delay(16.667 - aTimer.getTicks());
+        }
+        PrintLog("Currently in SplashScreen");
         if (totalTime > 5000) {
+            PrintLog("Quit Splash Screen");
             quit = true;
         }
     }
@@ -289,16 +299,6 @@ void GameEngine::SplashUpdate()
             //printf("event polled");
             break;
         }
-        if (16.667 - aTimer.getTicks() < 0)
-        {
-            PrintLog("FrameRate: " + to_string(aTimer.getTicks()));
-        }
-        else
-        {
-            PrintLog("FrameRate: 16.667"); //print 16.667 if get ticks is less than 16.667 since delay sets the framerate to this valued
-            SDL_Delay(16.667 - aTimer.getTicks());
-        }
-        PrintLog("Currently in Splash Screen");
     }
     if (leftMousePressed)
     {
