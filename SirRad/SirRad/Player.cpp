@@ -158,12 +158,15 @@ void Player::Animate()
 				{
 				case 3:
 					parent->ChangeScore(200);
+					parent->PrintLog("Ollie! + 200 score!");
 					break;
 				case 4:
-					parent->ChangeScore(600);
+					parent->ChangeScore(1000);
+					parent->PrintLog("Christ! + 1000 Score!");
 					break;
 				case 5:
-					parent->ChangeScore(600);
+					parent->ChangeScore(1000);
+					parent->PrintLog("Flip! + 1000 Score!");
 					break;
 				default:
 					break;

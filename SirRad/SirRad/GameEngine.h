@@ -47,6 +47,7 @@ private:
 	SZ_Timer aTimer;
 	bool quit = false;
 	bool leftMousePressed = false;
+	bool isFullscreen = false;
 	int count = 0;
 	int GameScore = 0;
 	//SDL_Renderer* renderer;

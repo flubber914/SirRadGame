@@ -9,10 +9,11 @@ GameEngine::GameEngine(SDL_Window* window)
     SoundPlayer(this),
     aTimer(this)
 {
-    SoundPlayer.MusicLocationVector = { "Sounds/PUNK_SKATE_TO-KNIGHT_OK_PROD._PAYMAN_192BPM.mp3"};
+    SDL_SetRelativeMouseMode(SDL_TRUE);
+    SoundPlayer.MusicLocationVector = { "Sounds/SirRadSong.mp3"};
     SoundPlayer.MusicVector.push_back(SoundPlayer.MixMusic(SoundPlayer.MusicLocationVector[0]));
     Mix_PlayMusic(SoundPlayer.MusicVector[0], 0);
-    GWindow = GameWindow(ImageRender.GetSurface(), this);
+    GWindow = GameWindow(ImageRender.GetSurface(), this, window);
     Collider.Init(this);
     //screenSurface = SDL_GetWindowSurface(window);
     //ImageRender = ImageRenderer(window);
@@ -20,15 +21,6 @@ GameEngine::GameEngine(SDL_Window* window)
     int size[2] = { GWindow.GetWindow()->w, GWindow.GetWindow()->h }; int pos[2] = {GWindow.GetWindow()->w / 2, GWindow.GetWindow()->h / 2};
     Background = new SplashRectangle(size, pos, &speed, "Images/Background.png");
     Background->Init(this);
-    int size2[2] = { 64, 64 }; int pos2[2] = { ImageRender.GetSurface()->w / 2,ImageRender.GetSurface()->h - (ImageRender.GetSurface()->h / 8)};
-    //////////////Create Main Character
-    SirRad = new Player(size2, pos2, &speed, "Images/SirRadSheet.png");
-    SirRad->Init(this);
-    enemyContainers.push_back(new EnemyContainer(10, EnemyContainer::fireball, 5, 3, this));
-    enemyContainers.push_back(new EnemyContainer(10, EnemyContainer::orc, 10, 10, this));
-    enemyContainers.push_back(new EnemyContainer(10, EnemyContainer::axe, -1, -1, this));
-    TTF_Init();
-    Sans = TTF_OpenFont("Text/RujisHandwritingFontV20-vrqZ.ttf", 24);
     /*SDL_Color textColour = { 255, 255, 255 };
     string textMessage = "SCORE: " + to_string(GameScore);
     surfaceMessage = TTF_RenderText_Solid(Sans, textMessage.c_str(), textColour);
@@ -45,6 +37,16 @@ GameEngine::GameEngine(SDL_Window* window)
     //Life = &newLife.Create(screenSurface->w, screenSurface->h, renderer);
     //ColourGame newGame;
     // game = &newGame.Create(renderer);
+    SDL_RenderSetLogicalSize(ImageRender.GetRenderer(), 800, 450);
+    int size2[2] = { 64, 64 }; int pos2[2] = { ImageRender.GetSurface()->w / 2,ImageRender.GetSurface()->h - (ImageRender.GetSurface()->h / 8) };
+    //////////////Create Main Character
+    SirRad = new Player(size2, pos2, &speed, "Images/SirRadSheet.png");
+    SirRad->Init(this);
+    enemyContainers.push_back(new EnemyContainer(10, EnemyContainer::fireball, 21.5, 1.25, this));
+    enemyContainers.push_back(new EnemyContainer(10, EnemyContainer::orc, 30, 5, this));
+    enemyContainers.push_back(new EnemyContainer(10, EnemyContainer::axe, -1, -1, this));
+    TTF_Init();
+    Sans = TTF_OpenFont("Text/RujisHandwritingFontV20-vrqZ.ttf", 24);
     Message_rect.x = 0;
     Message_rect.y = 0;
     Message_rect.w = 100;
@@ -110,8 +112,8 @@ void GameEngine::GameLoop()
         else 
         {
             PrintLog("FrameRate: 16.667"); //print 16.667 if get ticks is less than 16.667 since delay sets the framerate to this valued
+            SDL_Delay(16.667 - aTimer.getTicks());
         }
-        SDL_Delay(16.667 - aTimer.getTicks());
     }
 }
 void GameEngine::Input()
@@ -128,7 +130,6 @@ void GameEngine::Input()
             switch (event.key.keysym.sym)
             {
             case SDLK_ESCAPE:
-                SDL_Quit();
                 quit = true;
                 break;
             case SDLK_a:
@@ -176,6 +177,16 @@ void GameEngine::Input()
                 PrintLog("is still logging: " + to_string(!isLogging));
                 isLogging = !isLogging;
                 break;
+            case SDLK_p:
+                if (isFullscreen) {
+                    SDL_SetWindowFullscreen(GWindow.GetScreen(), 0);
+                    isFullscreen = false;
+                }
+                else {
+                    SDL_SetWindowFullscreen(GWindow.GetScreen(), SDL_WINDOW_FULLSCREEN_DESKTOP);
+                    isFullscreen = true;
+                }
+                break;
             default:
                 break;
             }
@@ -197,9 +208,20 @@ void GameEngine::Update()
     SirRad->ChangeDirection(0);
     SirRad->Animate();
     UpdateContainers();
+    PrintLog("Currently in Main Game");
     if (totalTime > 80000) {
         quit = true;
+        PrintLog("Quit with overtime");
         PrintLog("Your score was " + to_string(GameScore));
+    }
+    else if (totalTime > 65000 && GameScore < 30000) /////////////This is overtime
+    {
+        quit = true;
+        PrintLog("Quit without overtime");
+        PrintLog("Your score was " + to_string(GameScore));
+    }
+    if (totalTime > 65000) {
+        PrintLog("Currently in Overtime");
     }
 }
 /// <summary>
@@ -269,10 +291,34 @@ void GameEngine::SplashUpdate()
                 leftMousePressed = false;
             }
             break;
+        case SDLK_l:
+            PrintLog("is still logging: " + to_string(!isLogging));
+            isLogging = !isLogging;
+            break;
+        case SDLK_p:
+            if (isFullscreen) {
+                SDL_SetWindowFullscreen(GWindow.GetScreen(), 0);
+                isFullscreen = false;
+            }
+            else {
+                SDL_SetWindowFullscreen(GWindow.GetScreen(), SDL_WINDOW_FULLSCREEN_DESKTOP);
+                isFullscreen = true;
+            }
+            break;
         default:
             //printf("event polled");
             break;
         }
+        if (16.667 - aTimer.getTicks() < 0)
+        {
+            PrintLog("FrameRate: " + to_string(aTimer.getTicks()));
+        }
+        else
+        {
+            PrintLog("FrameRate: 16.667"); //print 16.667 if get ticks is less than 16.667 since delay sets the framerate to this valued
+            SDL_Delay(16.667 - aTimer.getTicks());
+        }
+        PrintLog("Currently in Splash Screen");
     }
     if (leftMousePressed)
     {

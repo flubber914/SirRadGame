@@ -66,12 +66,12 @@ void Axe::Collide(Character* other)
 			axeHit = true;
 			if (parent->SirRad->performingTrick) 
 			{
-				parent->PrintLog("dodged with trick");
+				parent->PrintLog("dodged with trick! + 500 score!");
 				parent->ChangeScore(500);
 			}
 			else 
 			{
-				parent->PrintLog("Axe Hit!");
+				parent->PrintLog("Axe Hit! - 300 score!");
 				parent->ChangeScore(-300);
 				Death();
 			}

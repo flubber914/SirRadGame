@@ -5,8 +5,9 @@ GameWindow::GameWindow()
 {
 }
 
-GameWindow::GameWindow(SDL_Surface* window, GameEngine* _parent)
+GameWindow::GameWindow(SDL_Surface* window, GameEngine* _parent, SDL_Window* _screen)
 {
+	Screen = _screen;
 	parent = _parent;
 	parent->PrintLog("Window stats calculated for functions");
 	gWindow = window;

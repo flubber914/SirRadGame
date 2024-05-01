@@ -74,12 +74,12 @@ void Fireball::Collide(Character* other)
 		hit = true;
 		if (parent->SirRad->performingTrick)
 		{
-			parent->PrintLog("dodged with trick");
+			parent->PrintLog("dodged with trick + 500 score!");
 			parent->ChangeScore(500);
 		}
 		else
 		{
-			parent->PrintLog("Fireball Hit!");
+			parent->PrintLog("Fireball Hit - 300 score!");
 			parent->ChangeScore(-300);
 			currentAnimation = 2;
 			speed = 0;

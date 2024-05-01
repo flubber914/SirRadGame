@@ -15,6 +15,7 @@ int main(int argc, char* argv[])
     //Create a window
     SDL_Window* window = SDL_CreateWindow("16598945 - Sir Rad!", 100, 100, 800, 450, 4);
 
+
     GameEngine theGame = GameEngine(window);
     //Finally, exit and unload everything
     SDL_Quit();
