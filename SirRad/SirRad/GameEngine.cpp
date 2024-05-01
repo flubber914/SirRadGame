@@ -15,28 +15,18 @@ GameEngine::GameEngine(SDL_Window* window)
     Mix_PlayMusic(SoundPlayer.MusicVector[0], 0);
     GWindow = GameWindow(ImageRender.GetSurface(), this, window);
     Collider.Init(this);
-    //screenSurface = SDL_GetWindowSurface(window);
-    //ImageRender = ImageRenderer(window);
+
     int speed = 0;
     int size[2] = { GWindow.GetWindow()->w, GWindow.GetWindow()->h }; int pos[2] = {GWindow.GetWindow()->w / 2, GWindow.GetWindow()->h / 2};
     Background = new SplashRectangle(size, pos, &speed, "Images/Background.png");
     Background->Init(this);
-    /*SDL_Color textColour = { 255, 255, 255 };
-    string textMessage = "SCORE: " + to_string(GameScore);
-    surfaceMessage = TTF_RenderText_Solid(Sans, textMessage.c_str(), textColour);
-    Message = SDL_CreateTextureFromSurface(ImageRender.GetRenderer(), surfaceMessage);*/
-    //SirRad.parent = this;
-    ////Initialise the game image renderer
-    //////////////
+
     PrintLog("splash screen is running");
     splashLife = new GameOfLife(100, 100, ImageRender.GetRenderer(), this);
     &splashLife->Create(100,100, ImageRender.GetRenderer(), this);
 
-    Splash(); //do the splash screen at the start of the game
-    //GameOfLife newLife;
-    //Life = &newLife.Create(screenSurface->w, screenSurface->h, renderer);
-    //ColourGame newGame;
-    // game = &newGame.Create(renderer);
+    Splash();
+
     SDL_RenderSetLogicalSize(ImageRender.GetRenderer(), 800, 450);
     int size2[2] = { 64, 64 }; int pos2[2] = { ImageRender.GetSurface()->w / 2,ImageRender.GetSurface()->h - (ImageRender.GetSurface()->h / 8) };
     //////////////Create Main Character
@@ -94,16 +84,6 @@ void GameEngine::GameLoop()
         Input();
         Update();
         Render();
-        //Handle events on queue
-
-        //Clear screen
-        //SDL_RenderClear(gRenderer);
-
-        //Render texture to screen
-        //SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);
-
-        //Update screen
-        //SDL_RenderPresent(gRenderer);
         totalTime += 16.667;
         if(16.667 - aTimer.getTicks() < 0)
         {
